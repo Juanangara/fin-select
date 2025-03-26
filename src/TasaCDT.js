@@ -83,12 +83,6 @@ const TasaCDT = () => {
 
     // Solo guardar la actividad si aún no se ha guardado para esta selección
     if (!activitySaved) {
-      // Extraer nombre y apellido de displayName (suponiendo que se separan por espacio)
-      const fullName = user.displayName || "Sin nombre";
-      const nameParts = fullName.split(" ");
-      const nombre = nameParts[0];
-      const apellido = nameParts[1] || "Sin apellido";
-
       // Preparamos la información a guardar en la base de datos
       const userDataToSave = {
         userId: user.uid,

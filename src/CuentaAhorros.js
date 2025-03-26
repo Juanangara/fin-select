@@ -80,12 +80,8 @@ const CuentaAhorros = () => {
 
     // Solo guardamos la actividad si aún no se ha guardado para esta selección
     if (!activitySaved) {
-      // Extraer nombre y apellido (suponiendo que el displayName tiene al menos dos palabras)
-      const fullName = user.displayName || "Sin nombre";
-      const nameParts = fullName.split(" ");
-      const nombre = nameParts[0];
-      const apellido = nameParts[1] || "Sin apellido";
-
+      // Extraer información del usuario (displayName, email, etc.)
+      // Se puede obtener el nombre completo desde displayName, si se requiere se puede procesar
       const userDataToSave = {
         userId: user.uid,
         correo: user.email || 'Sin correo',
@@ -109,8 +105,10 @@ const CuentaAhorros = () => {
   if (loading) return <div className="cuenta-ahorro-loading">Cargando...</div>;
   if (!data) return <div className="cuenta-ahorro-error">Error al cargar los datos.</div>;
 
-  // Se asume que la fila de encabezado se encuentra en el índice 1 del JSON
-  const headerRow = data[1];
+  // Se asume que la fila de encabezado se encuentra en el índice 1 del JSON.
+  // Si no se utiliza, se elimina la variable.
+  // const headerRow = data[1];
+
   // Procesamos los datos a partir del índice 2, en pares: una fila para la entidad y la siguiente para las tasas.
   const pairedData = [];
   for (let i = 2; i < data.length; i += 2) {
