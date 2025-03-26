@@ -1,0 +1,63 @@
+/* Contenedor principal */
+.home-container {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(180deg, #71cefd 5.5%, #ebf8ff 46.5%, #78d2ff 93%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Sección del logo */
+.home-header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.home-logo {
+  width: 150px;
+  height: auto;
+}
+
+/* Contenedor de botones */
+.home-content {
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Estilo de los botones */
+.home-button {
+  width: 80%;
+  max-width: 300px;
+  height: 50px;
+  margin: 10px 0;
+  border-radius: 30px;
+  border: none;
+  background-color: #fff;
+  color: #000;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.home-button:hover {
+  background-color: #f0f0f0;
+}
+
+/* Estilo del botón de cerrar sesión */
+.logout-button {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.logout-button:hover {
+  background-color: #cc0000;
+}
+

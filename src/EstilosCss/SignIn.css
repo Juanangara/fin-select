@@ -1,0 +1,87 @@
+/* SignIn.css */
+
+/* Contenedor principal: ocupa todo el viewport y aplica el degradado */
+.signin-container {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(180deg, #71CEFD 5.5%, #EBF8FF 46.5%, #78D2FF 93%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Contenedor del formulario: fondo semitransparente, bordes redondeados y sombra */
+.signin-content {
+  width: 90%;
+  max-width: 400px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 30px 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Título */
+.signin-content h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #0c2440;
+}
+
+/* Inputs */
+.signin-content input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* Mensaje de error */
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+/* Botón "Registrarse": ancho completo, padding y bordes redondeados */
+.register-button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 30px;
+  background-color: #000;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.register-button:hover {
+  background-color: #333;
+}
+
+/* Botón "Volver": estilo similar al botón principal pero con fondo blanco y borde */
+.back-button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border: 1px solid #000;
+  border-radius: 30px;
+  background-color: #fff;
+  color: #000;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #f0f0f0;
+}
