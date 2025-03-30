@@ -79,8 +79,8 @@ const Credito = () => {
 
     // Solo se guarda la actividad si aún no se ha guardado para esta selección
     if (!activitySaved) {
-      // Se obtiene el displayName (si se necesita separar nombre y apellido, se puede hacerlo aquí)
-      const fullName = user.displayName || "Sin nombre";
+      // Se obtiene el displayName si se necesita en el futuro, pero no se asigna a una variable no usada
+      // const fullName = user.displayName || "Sin nombre";
       
       const userDataToSave = {
         userId: user.uid,
