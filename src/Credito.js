@@ -82,9 +82,7 @@ const Credito = () => {
       // Separamos nombre y apellido del displayName (suponiendo que están separados por espacio)
       const fullName = user.displayName || "Sin nombre";
       const nameParts = fullName.split(" ");
-      const nombre = nameParts[0];
-      const apellido = nameParts[1] || "Sin apellido";
-
+      
       const userDataToSave = {
         userId: user.uid,
         correo: user.email || "Sin correo", 
