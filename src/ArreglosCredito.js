@@ -2,7 +2,7 @@
 export const creditOptions = {
   "Comercial ordinario": {
     Productos: {
-      "Empresarial": [
+      "Empresarial en pesos": [
         "Hasta 30 días",
         "Más de 30 días y hasta 1 año",
         "Más de 1 año y hasta 3 años",
@@ -12,24 +12,21 @@ export const creditOptions = {
       ],
       "Factoring": [
         "Hasta 30 días",
-        "Más de 30 días y hasta 1 año",
-        "Más de 1 año y hasta 3 años",
-        "Más de 3 años y hasta 5 años",
-        "Más de 5 años y hasta 7 años"
+        "Más de 30 días y hasta 1 año"
       ],
-      "Leasing Financiero - Financiación maquinaria y equipo": [
+      "Leasing financiero - financiación maquinaria y equipo": [
         "Más de 1 año y hasta 3 años",
         "Más de 3 años y hasta 5 años",
         "Más de 5 años y hasta 7 años",
         "A más de 7 años"
       ],
-      "Leasing Financiero - Vehículos": [
+      "Leasing financiero - financiación vehículos": [
         "Más de 30 días y hasta 1 año",
         "Más de 1 año y hasta 3 años",
         "Más de 3 años y hasta 5 años",
         "Más de 5 años y hasta 7 años"
       ],
-      "Leasing Financiero - otros": [
+      "Leasing financiero - otros": [
         "Más de 1 año y hasta 3 años",
         "Más de 3 años y hasta 5 años",
         "Más de 5 años y hasta 7 años",
@@ -128,7 +125,8 @@ export const creditOptions = {
       ],
       "Sobregiro en cuenta corriente persona natural": [
         "Hasta 30 días",
-        "Entre 31 días y 1 año"
+        "Entre 31 días y 1 año",
+        "Más de 1 año y hasta 3 años"
       ]
     }
   },
@@ -184,32 +182,33 @@ export const creditOptions = {
   },
   "Crédito productivo": {
     Productos: {
-      "Crédito popular productivo rural": [
+      "Crédito popular productivo rural (sin recursos de redescuento)": [
         "Hasta 30 días",
-        "Más de 30 días y hasta 1 año",
-        "Más de 1 año y hasta 3 años",
-        "Más de 3 años y hasta 5 años"
-      ],
-      "Crédito popular productivo urbano (con recursos de redescuento)": [
-        "Hasta 30 días",
-        "Más de 30 días y hasta 1 año",
-        "Más de 1 año y hasta 3 años",
-        "Más de 3 años y hasta 5 años"
-      ],
-      "Crédito productivo de mayor monto": [
-        "Más de 30 días y hasta 1 año",
-        "Más de 1 año y hasta 3 años",
-        "Más de 3 años y hasta 5 años",
-        "Más de 5 años y hasta 7 años",
-        "A más de 7 años"
-      ],
-      "Crédito productivo rural": [
         "Más de 30 días y hasta 1 año",
         "Más de 1 año y hasta 3 años",
         "Más de 3 años y hasta 5 años",
         "Más de 5 años y hasta 7 años"
       ],
-      "Crédito productivo urbano": [
+      "Crédito popular productivo urbano (sin recursos de redescuento)": [
+        "Hasta 30 días",
+        "Más de 30 días y hasta 1 año",
+        "Más de 1 año y hasta 3 años",
+        "Más de 3 años y hasta 5 años"
+      ],
+      "Crédito productivo de mayor monto (sin recursos de redescuento)": [
+        "Más de 30 días y hasta 1 año",
+        "Más de 1 año y hasta 3 años",
+        "Más de 3 años y hasta 5 años",
+        "Más de 5 años y hasta 7 años"
+      ],
+      "Crédito productivo rural (sin recursos de redescuento)": [
+        "Más de 30 días y hasta 1 año",
+        "Más de 1 año y hasta 3 años",
+        "Más de 3 años y hasta 5 años",
+        "Más de 5 años y hasta 7 años"
+      ],
+      "Crédito productivo urbano (sin recursos de redescuento)": [
+        "Hasta 30 días",
         "Más de 30 días y hasta 1 año",
         "Más de 1 año y hasta 3 años",
         "Más de 3 años y hasta 5 años",

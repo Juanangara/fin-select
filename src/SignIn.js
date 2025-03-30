@@ -1,10 +1,31 @@
-// SignIn.js
 import { useState } from "react";
 import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth, dbRT } from "./firebase";
 import { ref, set } from "firebase/database";
 import { useNavigate } from "react-router-dom";
-import "./EstilosCss/SignIn.css"; // Importa los estilos
+import "./EstilosCss/SignIn.css"; // Importa tus estilos
+
+// Componente Modal para Términos y Condiciones
+function TermsModal({ onAccept, onCancel }) {
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <h3>Términos y Condiciones</h3>
+        <p>
+          Al registrarte, aceptas que se registre tu actividad en la página y que se almacenen tus datos.
+        </p>
+        <div className="modal-actions">
+          <button onClick={onAccept} className="modal-accept">
+            Acepto
+          </button>
+          <button onClick={onCancel} className="modal-cancel">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function SignIn() {
   const navigate = useNavigate();
@@ -15,24 +36,40 @@ function SignIn() {
     email: "",
     password: ""
   });
+  // Estado para el código de país, por defecto "+57"
+  const [countryCode, setCountryCode] = useState("+57");
   const [error, setError] = useState("");
+  const [showTerms, setShowTerms] = useState(false);
+
+  // Array de códigos de país
+  const countryCodes = [
+    "+57",
+    "+1",
+    "+44",
+    "+52",
+    "+34",
+    "+33",
+    "+49",
+    "+61",
+    "+81",
+    "+86"
+  ];
 
   // Actualiza los datos del formulario
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Función que se ejecuta al hacer click en el botón de registro
   const handleRegister = async () => {
     const { nombre, apellido, telefono, email, password } = formData;
 
-    // Validación 1: Verificar que todos los campos estén llenos
+    // Validación de campos
     if (!nombre || !apellido || !telefono || !email || !password) {
       setError("Por favor, completa todos los campos.");
       return;
     }
 
-    // Validación 2: Validar que el correo tenga un formato correcto
+    // Validar formato de correo
     const emailRegex = /\S+@\S+\.\S+/;
     if (!emailRegex.test(email)) {
       setError("El correo no es válido.");
@@ -40,25 +77,23 @@ function SignIn() {
     }
 
     try {
-      // Intenta registrar al usuario con email y contraseña
+      // Registrar al usuario con email y contraseña
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-      // Guarda datos adicionales en la Realtime Database usando el UID del usuario
+      // Guarda datos adicionales en la Realtime Database junto con la aceptación de términos.
+      // Combinamos el countryCode y el teléfono ingresado.
       await set(ref(dbRT, "users/" + userCredential.user.uid), {
         nombre,
         apellido,
-        telefono,
+        telefono: countryCode + formData.telefono,
         email,
-        provider: "password" // Este atributo vincula la información con la autenticación
+        provider: "password",
+        termsAccepted: true
       });
 
-      // Cierra la sesión para que el usuario no quede logueado automáticamente
       await signOut(auth);
-
-      // Si todo sale bien, redirige a la página de Login
       navigate("/login");
     } catch (err) {
-      // Validación 3: Si el correo ya está en uso, Firebase arroja un error
       if (err.code === "auth/email-already-in-use") {
         setError("El correo ya está registrado.");
       } else {
@@ -67,10 +102,30 @@ function SignIn() {
     }
   };
 
+  // Al presionar "Registrarse" se muestra el modal de términos
+  const handleRegisterClick = () => {
+    const { nombre, apellido, telefono, email, password } = formData;
+    if (!nombre || !apellido || !telefono || !email || !password) {
+      setError("Por favor, completa todos los campos.");
+      return;
+    }
+    setShowTerms(true);
+  };
+
+  const handleTermsAccept = () => {
+    setShowTerms(false);
+    handleRegister();
+  };
+
+  const handleTermsCancel = () => {
+    setShowTerms(false);
+    alert("Debe aceptar los términos y condiciones para registrarse.");
+  };
+
   return (
     <div className="signin-container">
       <div className="signin-content">
-        <h2>Sign In</h2>
+        <h2>Registro</h2>
         <input
           type="text"
           placeholder="Nombre"
@@ -87,14 +142,28 @@ function SignIn() {
           onChange={handleChange}
           required
         />
-        <input
-          type="tel"
-          placeholder="Teléfono"
-          name="telefono"
-          value={formData.telefono}
-          onChange={handleChange}
-          required
-        />
+        {/* Contenedor para código de país y teléfono */}
+        <div className="telefono-container">
+          <select
+            className="pais-codigo-select"
+            value={countryCode}
+            onChange={(e) => setCountryCode(e.target.value)}
+          >
+            {countryCodes.map((code) => (
+              <option key={code} value={code}>
+                {code}
+              </option>
+            ))}
+          </select>
+          <input
+            type="tel"
+            placeholder="Teléfono"
+            name="telefono"
+            value={formData.telefono}
+            onChange={handleChange}
+            required
+          />
+        </div>
         <input
           type="email"
           placeholder="Correo"
@@ -115,7 +184,7 @@ function SignIn() {
         <button
           type="button"
           className="register-button"
-          onClick={handleRegister}
+          onClick={handleRegisterClick}
         >
           Registrarse
         </button>
@@ -123,6 +192,9 @@ function SignIn() {
           Volver
         </button>
       </div>
+      {showTerms && (
+        <TermsModal onAccept={handleTermsAccept} onCancel={handleTermsCancel} />
+      )}
     </div>
   );
 }

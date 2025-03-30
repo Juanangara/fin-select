@@ -1,60 +1,38 @@
 // TasaCDT.js
-import React, { useState, useEffect } from 'react';
-import './EstilosCss/TasaCDT.css';
+import React, { useState, useEffect } from "react";
+import "./EstilosCss/TasaCDT.css";
 
-import { auth, dbRT } from './firebase';  // Ajusta la ruta según tu estructura
-import { ref, push } from 'firebase/database';
-
-const TRMFooter = () => {
-  const [trm, setTrm] = useState(null);
-
-  useEffect(() => {
-    // Reemplaza esta URL por la de una API que devuelva la TRM actualizada diariamente
-    fetch('https://api.ejemplo.com/trm')
-      .then(response => response.json())
-      .then(data => {
-        // Supongamos que la API retorna el valor en data.trmValue
-        setTrm(data.trmValue);
-      })
-      .catch(error => {
-        console.error("Error al obtener la TRM:", error);
-      });
-  }, []);
-
-  return (
-    <footer className="trm-footer">
-      <p>TRM: {trm ? `${trm} COP/USD` : "Cargando TRM..."}</p>
-    </footer>
-  );
-};
+import { auth, dbRT } from "./firebase"; // Ajusta la ruta según tu estructura
+import { ref, push } from "firebase/database";
 
 const TasaCDT = () => {
   const [cdtData, setCdtData] = useState(null);
-  const [selectedTerm, setSelectedTerm] = useState('Seleccione una opción');
+  const [selectedTerm, setSelectedTerm] = useState("Seleccione una opción");
   const [loading, setLoading] = useState(true);
   const [showResults, setShowResults] = useState(false);
   const [activitySaved, setActivitySaved] = useState(false);
 
   useEffect(() => {
     // Se asume que CDT.json se encuentra en la carpeta public
-    fetch('/CDT.json')
-      .then(response => response.json())
-      .then(data => {
+    fetch("/CDT.json")
+      .then((response) => response.json())
+      .then((data) => {
         setCdtData(data);
         setLoading(false);
         // Configuración inicial: usamos la fila de encabezados (índice 2)
         const headerRow = data[2];
         const termKeys = Object.keys(headerRow).filter(
-          key =>
-            key !== "ESTABLECIMIENTOS DE CRÉDITO\nTasas efectivas anuales con corte al 2025-03-10" &&
+          (key) =>
+            key !==
+              "ESTABLECIMIENTOS DE CRÉDITO\nTasas efectivas anuales con corte al 2025-03-10" &&
             key !== "Unnamed: 0"
         );
         // Si no hay términos, dejamos la opción por defecto
         if (termKeys.length === 0) {
-          setSelectedTerm('');
+          setSelectedTerm("");
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error al cargar CDT.json:", error);
         setLoading(false);
       });
@@ -69,15 +47,15 @@ const TasaCDT = () => {
 
   const handleShowResults = () => {
     // Verificar que se haya seleccionado una opción válida
-    if (selectedTerm === 'Seleccione una opción' || !selectedTerm) {
-      alert('Debe seleccionar una opción');
+    if (selectedTerm === "Seleccione una opción" || !selectedTerm) {
+      alert("Debe seleccionar una opción");
       return;
     }
 
     // Obtener el usuario actual
     const user = auth.currentUser;
     if (!user) {
-      alert('No hay usuario autenticado. Por favor inicie sesión.');
+      alert("No hay usuario autenticado. Por favor inicie sesión.");
       return;
     }
 
@@ -86,21 +64,21 @@ const TasaCDT = () => {
       // Preparamos la información a guardar en la base de datos
       const userDataToSave = {
         userId: user.uid,
-        correo: user.email || 'Sin correo',
-        selectedTerm,           // Opción seleccionada (plazo)
-        cdt: 'CDT',
-        fecha: new Date().toISOString()
+        correo: user.email || "Sin correo",
+        selectedTerm, // Opción seleccionada (plazo)
+        cdt: "CDT",
+        fecha: new Date().toISOString(),
       };
 
       // Guardamos la actividad en la Realtime Database
-      push(ref(dbRT, 'userActivities'), userDataToSave)
+      push(ref(dbRT, "userActivitiesTasaCDT"), userDataToSave)
         .then(() => {
-          console.log('Actividad guardada con éxito');
+          console.log("Actividad guardada con éxito");
           // Marcamos que ya se ha guardado la actividad para evitar duplicados
           setActivitySaved(true);
         })
         .catch((error) => {
-          console.error('Error al guardar la actividad:', error);
+          console.error("Error al guardar la actividad:", error);
         });
     }
 
@@ -109,32 +87,34 @@ const TasaCDT = () => {
   };
 
   if (loading) return <div className="tasa-cdt-loading">Cargando...</div>;
-  if (!cdtData) return <div className="tasa-cdt-error">Error al cargar los datos.</div>;
+  if (!cdtData)
+    return <div className="tasa-cdt-error">Error al cargar los datos.</div>;
 
   // Extraemos el header y definimos la clave de identidad
   const headerRow = cdtData[2];
-  const identityColumnKey = "ESTABLECIMIENTOS DE CRÉDITO\nTasas efectivas anuales con corte al 2025-03-10";
+  const identityColumnKey =
+    "ESTABLECIMIENTOS DE CRÉDITO\nTasas efectivas anuales con corte al 2025-03-10";
   const termKeys = Object.keys(headerRow).filter(
-    key => key !== identityColumnKey && key !== "Unnamed: 0"
+    (key) => key !== identityColumnKey && key !== "Unnamed: 0"
   );
 
   // Encontramos la clave correspondiente al plazo seleccionado
   const selectedTermKey = termKeys.find(
-    key => headerRow[key] === selectedTerm
+    (key) => headerRow[key] === selectedTerm
   );
 
   // Obtenemos las filas de datos (desde la fila 3 en adelante), descartando filas sin información o notas.
-  const dataRows = cdtData.slice(3).filter(row => {
+  const dataRows = cdtData.slice(3).filter((row) => {
     const identidad = row[identityColumnKey];
-    return identidad && !identidad.startsWith('•');
+    return identidad && !identidad.startsWith("•");
   });
 
   // Calculamos las tasas numéricas para el plazo seleccionado, comprobando valores nulos y ordenamos de mayor a menor.
   const rankedData = dataRows
-    .map(row => {
+    .map((row) => {
       let rawValue = row[selectedTermKey];
       if (rawValue == null) rawValue = "0 %";
-      let rate = parseFloat(rawValue.toString().replace('%', '').trim());
+      let rate = parseFloat(rawValue.toString().replace("%", "").trim());
       if (isNaN(rate)) {
         rate = 0;
       }
@@ -149,9 +129,11 @@ const TasaCDT = () => {
 
   return (
     <div className="tasa-cdt-container">
-      <h1 className="tasa-cdt-title">Top 5 Mejores Tasas</h1>
+      <h1 className="tasa-cdt-title">Mejores tasas-CDT</h1>
       <div className="tasa-cdt-controls">
-        <label htmlFor="term" className="tasa-cdt-label">Plazo:</label>
+        <label htmlFor="term" className="tasa-cdt-label">
+          Plazo:
+        </label>
         <select
           id="term"
           className="tasa-cdt-select"
@@ -189,7 +171,7 @@ const TasaCDT = () => {
           </tbody>
         </table>
       )}
-      <TRMFooter />
+      <footer className="trm-footer">© 2025 Consulta de tasas-CDT</footer>
     </div>
   );
 };

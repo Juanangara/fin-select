@@ -38,11 +38,11 @@ function Home() {
 
       <div className="home-content">
         <button className="home-button" onClick={handleCredito}>
-          CRÉDITO
+          Créditos
         </button>
 
         <button className="home-button" onClick={handleCDT}>
-          Tasas CDT
+          Tasas-CDT
         </button>
 
         {/* Nuevo botón para Cuenta de ahorros */}
@@ -51,7 +51,7 @@ function Home() {
         </button>
 
         <button className="home-button logout-button" onClick={handleLogout}>
-          CERRAR SESIÓN
+          Cerrar sesión
         </button>
       </div>
     </div>

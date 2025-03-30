@@ -137,3 +137,9 @@
   color: #333;
   margin-right: 1rem; /* Ajusta según tu preferencia */
 }
+
+.boton-seleccione{
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Ajusta según necesites */
+}
