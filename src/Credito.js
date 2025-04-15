@@ -32,32 +32,6 @@ const Credito = () => {
     return data.map((item) => item.fecha_corte);
   };
 
-  // Función que realiza la consulta usando una fecha específica
-  const consultarConFecha = async (fecha) => {
-    const whereClause = `tipo_de_cr_dito='${selectedTipo}'`;
-    const additionalFilters = ` AND producto_de_cr_dito='${selectedProducto}' AND plazo_de_cr_dito='${selectedPlazo}'`;
-    const dateFilter = ` AND fecha_corte='${fecha}'`;
-    const where = whereClause + additionalFilters + dateFilter;
-
-    const params = new URLSearchParams({
-      "$where": where,
-      "$select":
-        "nombre_entidad, sum(tasa_efectiva_promedio * montos_desembolsados)/sum(montos_desembolsados) as tasa_promedio",
-      "$group": "nombre_entidad",
-      "$order": "tasa_promedio ASC",
-      "$limit": "5",
-    });
-
-    const response = await fetch(
-      `https://www.datos.gov.co/resource/w9zh-vetq.json?${params.toString()}`
-    );
-    if (!response.ok) {
-      throw new Error("Error al consultar la API");
-    }
-    const data = await response.json();
-    return data;
-  };
-
   // Función que obtiene la penúltima fecha de corte y ejecuta la consulta con ella
   const handleBuscar = async () => {
     if (!selectedTipo || !selectedProducto || !selectedPlazo) {
