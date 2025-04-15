@@ -102,7 +102,7 @@ const CuentaAhorros = () => {
     if (!ratesRow) break;
     const entidad =
       entityRow[
-        "ESTABLECIMIENTOS DE CRÉDITO\nTasas efectivas anuales con corte al 2025-03-14"
+        "ESTABLECIMIENTOS DE CRÉDITO\nTasas efectivas anuales con corte al 2025-04-11"
       ];
     pairedData.push({
       entidad,

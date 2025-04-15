@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./EstilosCss/Credito.css";
-import { creditOptions } from "./ArreglosCredito"; // Asegúrate de ajustar la ruta
-import { auth, dbRT } from "./firebase"; // Asegúrate de ajustar la ruta
+import { creditOptions } from "./ArreglosCredito"; // Ajusta la ruta
+import { auth, dbRT } from "./firebase"; // Ajusta la ruta
 import { ref, push } from "firebase/database";
 
 const Credito = () => {
@@ -15,15 +15,51 @@ const Credito = () => {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  // Usamos una fecha fija como fecha de corte (por ejemplo, 14 de marzo de 2025)
-  const fixedFechaCorte = "2025-03-14T00:00:00.000";
-  const [fechaCorte, setFechaCorte] = useState(fixedFechaCorte);
+  // Estado para guardar la fecha de corte utilizada
+  const [fechaCorte, setFechaCorte] = useState("");
   // Flag para evitar guardar actividad duplicada
   const [activitySaved, setActivitySaved] = useState(false);
 
-  // Función que arma la consulta y la ejecuta al presionar el botón Buscar
+  // Función para obtener las 2 fechas de corte más recientes
+  const fetchFechasCorte = async () => {
+    const url =
+      "https://www.datos.gov.co/resource/w9zh-vetq.json?$select=fecha_corte&$order=fecha_corte DESC&$limit=2";
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("Error al obtener las fechas de corte");
+    }
+    const data = await response.json();
+    return data.map((item) => item.fecha_corte);
+  };
+
+  // Función que realiza la consulta usando una fecha específica
+  const consultarConFecha = async (fecha) => {
+    const whereClause = `tipo_de_cr_dito='${selectedTipo}'`;
+    const additionalFilters = ` AND producto_de_cr_dito='${selectedProducto}' AND plazo_de_cr_dito='${selectedPlazo}'`;
+    const dateFilter = ` AND fecha_corte='${fecha}'`;
+    const where = whereClause + additionalFilters + dateFilter;
+
+    const params = new URLSearchParams({
+      "$where": where,
+      "$select":
+        "nombre_entidad, sum(tasa_efectiva_promedio * montos_desembolsados)/sum(montos_desembolsados) as tasa_promedio",
+      "$group": "nombre_entidad",
+      "$order": "tasa_promedio ASC",
+      "$limit": "5",
+    });
+
+    const response = await fetch(
+      `https://www.datos.gov.co/resource/w9zh-vetq.json?${params.toString()}`
+    );
+    if (!response.ok) {
+      throw new Error("Error al consultar la API");
+    }
+    const data = await response.json();
+    return data;
+  };
+
+  // Función que obtiene la penúltima fecha de corte y ejecuta la consulta con ella
   const handleBuscar = async () => {
-    // Validamos que se hayan seleccionado todos los campos
     if (!selectedTipo || !selectedProducto || !selectedPlazo) {
       alert("Por favor, seleccione todos los campos");
       return;
@@ -33,24 +69,28 @@ const Credito = () => {
     setError(null);
 
     try {
-      // Usamos la fecha fija como fecha de corte
-      setFechaCorte(fixedFechaCorte);
+      const fechas = await fetchFechasCorte();
+      let fechaSeleccionada = "";
+      if (fechas.length >= 2) {
+        // Usamos la penúltima fecha (índice 1)
+        fechaSeleccionada = fechas[1];
+      } else if (fechas.length > 0) {
+        fechaSeleccionada = fechas[0];
+      }
+      setFechaCorte(fechaSeleccionada);
 
-      // Construimos la cláusula WHERE
       const whereClause = `tipo_de_cr_dito='${selectedTipo}'`;
       const additionalFilters = ` AND producto_de_cr_dito='${selectedProducto}' AND plazo_de_cr_dito='${selectedPlazo}'`;
-      const dateFilter = ` AND fecha_corte='${fixedFechaCorte}'`;
+      const dateFilter = ` AND fecha_corte='${fechaSeleccionada}'`;
       const where = whereClause + additionalFilters + dateFilter;
 
-      // Parámetros de la consulta usando la fórmula ponderada:
-      // sum(tasa_efectiva_promedio * montos_desembolsados)/sum(montos_desembolsados)
       const params = new URLSearchParams({
-        $where: where,
-        $select:
+        "$where": where,
+        "$select":
           "nombre_entidad, sum(tasa_efectiva_promedio * montos_desembolsados)/sum(montos_desembolsados) as tasa_promedio",
-        $group: "nombre_entidad",
-        $order: "tasa_promedio ASC",
-        $limit: "5",
+        "$group": "nombre_entidad",
+        "$order": "tasa_promedio ASC",
+        "$limit": "5",
       });
 
       const response = await fetch(
@@ -70,28 +110,27 @@ const Credito = () => {
 
   // Función para guardar la actividad del usuario (filtros y datos personales)
   const guardarActividad = () => {
-    // Obtener el usuario actual
     const user = auth.currentUser;
     if (!user) {
       alert("No hay usuario autenticado. Por favor, inicie sesión.");
       return;
     }
-
-    // Solo se guarda la actividad si aún no se ha guardado para esta selección
     if (!activitySaved) {
-      // Se obtiene el displayName si se necesita en el futuro, pero no se asigna a una variable no usada
-      // const fullName = user.displayName || "Sin nombre";
-      
+      const fullName = user.displayName || "Sin nombre";
+      const nameParts = fullName.split(" ");
+      const nombre = nameParts[0];
+      const apellido = nameParts[1] || "Sin apellido";
+
       const userDataToSave = {
         userId: user.uid,
-        correo: user.email || "Sin correo", 
-        selectedTipo, // Tipo de crédito seleccionado
-        selectedProducto, // Producto seleccionado
-        selectedPlazo, // Plazo seleccionado
+        correo: user.email || "Sin correo",
+        telefono: user.phoneNumber || "Sin teléfono",
+        selectedTipo,
+        selectedProducto,
+        selectedPlazo,
         fecha: new Date().toISOString(),
       };
 
-      // Guardamos en el nodo "userActivitiesCredito"
       push(ref(dbRT, "userActivitiesCredito"), userDataToSave)
         .then(() => {
           console.log("Actividad guardada con éxito");
@@ -103,7 +142,22 @@ const Credito = () => {
     }
   };
 
-  // Formateamos la fecha de corte a un formato legible
+  // Al presionar "Mostrar", se guarda la actividad y se ejecuta la consulta usando la penúltima fecha de corte
+  const handleShowResults = async () => {
+    if (!selectedTipo || !selectedProducto || !selectedPlazo) {
+      alert("Por favor, seleccione todos los campos");
+      return;
+    }
+    guardarActividad();
+    await handleBuscar();
+  };
+
+  // Opciones dinámicas:
+  const productosDisponibles = selectedTipo ? Object.keys(creditOptions[selectedTipo].Productos) : [];
+  const plazosDisponibles =
+    selectedTipo && selectedProducto ? creditOptions[selectedTipo].Productos[selectedProducto] : [];
+
+  // Función para formatear la fecha de corte a un formato legible
   const formatearFecha = (fechaISO) => {
     const fecha = new Date(fechaISO);
     return fecha.toLocaleDateString("es-CO", {
@@ -113,50 +167,28 @@ const Credito = () => {
     });
   };
 
-  // Al presionar el botón "Mostrar", guardamos la actividad (si no se ha guardado) y mostramos resultados
-  const handleShowResults = () => {
-    // Verificar que se hayan seleccionado todos los campos
-    if (!selectedTipo || !selectedProducto || !selectedPlazo) {
-      alert("Por favor, seleccione todos los campos");
-      return;
-    }
-
-    // Guardamos la actividad si aún no se ha guardado
-    guardarActividad();
-
-    // Ejecutamos la consulta a la API
-    handleBuscar();
-  };
-
-  // Generamos opciones dinámicas:
-  // Productos disponibles según el tipo seleccionado
-  const productosDisponibles = selectedTipo
-    ? Object.keys(creditOptions[selectedTipo].Productos)
-    : [];
-  // Plazos disponibles según el tipo y producto seleccionado
-  const plazosDisponibles =
-    selectedTipo && selectedProducto
-      ? creditOptions[selectedTipo].Productos[selectedProducto]
-      : [];
-
   return (
-    <div className="tasa-cdt-container">
-      <div className="tasa-cdt-header">
-        <h2 className="tasa-cdt-title">Consulta de créditos</h2>
-        {fechaCorte && <p className="tasa-cdt-fecha">Fecha de corte: {formatearFecha(fechaCorte)}</p>}
+    <div className="credit-container">
+      <div className="credit-header">
+        <h2 className="credit-title">Consulta de créditos</h2>
+        {fechaCorte && (
+          <p className="credit-date">
+            Fecha de corte: {formatearFecha(fechaCorte)}
+          </p>
+        )}
       </div>
 
-      <div className="tasa-cdt-controls">
-        <label className="tasa-cdt-label">
+      <div className="credit-controls">
+        <label className="credit-label">
           Tipo de Crédito:
           <select
-            className="tasa-cdt-select"
+            className="credit-select"
             value={selectedTipo}
             onChange={(e) => {
               setSelectedTipo(e.target.value);
               setSelectedProducto("");
               setSelectedPlazo("");
-              setActivitySaved(false); // Reiniciamos para permitir guardar nueva actividad
+              setActivitySaved(false);
             }}
           >
             <option value="">Seleccione</option>
@@ -170,11 +202,11 @@ const Credito = () => {
       </div>
 
       {selectedTipo && (
-        <div className="tasa-cdt-controls">
-          <label className="tasa-cdt-label">
+        <div className="credit-controls">
+          <label className="credit-label">
             Producto:
             <select
-              className="tasa-cdt-select"
+              className="credit-select"
               value={selectedProducto}
               onChange={(e) => {
                 setSelectedProducto(e.target.value);
@@ -182,9 +214,7 @@ const Credito = () => {
                 setActivitySaved(false);
               }}
             >
-              <option className="boton-seleccione" value="">
-                Seleccione
-              </option>
+              <option value="">Seleccione</option>
               {productosDisponibles.map((prod) => (
                 <option key={prod} value={prod}>
                   {prod}
@@ -196,11 +226,11 @@ const Credito = () => {
       )}
 
       {selectedProducto && (
-        <div className="tasa-cdt-controls">
-          <label className="tasa-cdt-label">
+        <div className="credit-controls">
+          <label className="credit-label">
             Plazo:
             <select
-              className="tasa-cdt-select"
+              className="credit-select"
               value={selectedPlazo}
               onChange={(e) => {
                 setSelectedPlazo(e.target.value);
@@ -218,29 +248,29 @@ const Credito = () => {
         </div>
       )}
 
-      <button className="tasa-cdt-button" onClick={handleShowResults}>
+      <button className="credit-button" onClick={handleShowResults}>
         Mostrar
       </button>
 
-      {loading && <p className="tasa-cdt-loading">Cargando...</p>}
-      {error && <p className="tasa-cdt-error">Error: {error}</p>}
+      {loading && <p className="credit-loading">Cargando...</p>}
+      {error && <p className="credit-error">Error: {error}</p>}
 
       {results.length > 0 && (
         <div>
-          <table className="tasa-cdt-table">
-            <thead className="tasa-cdt-thead">
+          <table className="credit-table">
+            <thead className="credit-table-head">
               <tr>
-                <th className="tasa-cdt-th">Ranking</th>
-                <th className="tasa-cdt-th">Entidad</th>
-                <th className="tasa-cdt-th">Tasa (E.A.)</th>
+                <th className="credit-table-th">Ranking</th>
+                <th className="credit-table-th">Entidad</th>
+                <th className="credit-table-th">Tasa (E.A.)</th>
               </tr>
             </thead>
-            <tbody className="tasa-cdt-tbody">
+            <tbody className="credit-table-body">
               {results.map((item, index) => (
-                <tr key={index} className="tasa-cdt-row">
-                  <td className="tasa-cdt-cell">{index + 1}</td>
-                  <td className="tasa-cdt-cell">{item.nombre_entidad}</td>
-                  <td className="tasa-cdt-cell">
+                <tr key={index} className="credit-table-row">
+                  <td className="credit-table-cell">{index + 1}</td>
+                  <td className="credit-table-cell">{item.nombre_entidad}</td>
+                  <td className="credit-table-cell">
                     {parseFloat(item.tasa_promedio).toFixed(1)}
                   </td>
                 </tr>
@@ -250,7 +280,7 @@ const Credito = () => {
         </div>
       )}
 
-      <footer className="trm-footer">© 2025 Consulta de créditos</footer>
+      <footer className="credit-footer">© 2025 Consulta de créditos</footer>
     </div>
   );
 };

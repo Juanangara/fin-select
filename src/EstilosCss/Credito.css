@@ -1,145 +1,134 @@
-/* Contenedor principal */
-.tasa-cdt-container {
+/* Contenedor principal del componente con fondo neutro y centrado */
+.credit-container {
   max-width: 800px;
   margin: 40px auto;
-  padding: 20px;
   background-color: #ffffff;
+  padding: 30px;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Helvetica', 'Arial', sans-serif;
 }
 
-/* Título */
-.tasa-cdt-title {
+/* Encabezado y título principal */
+.credit-header {
   text-align: center;
-  font-size: 2rem;
-  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+.credit-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #1a237e;
+  margin-bottom: 5px;
+}
+
+.credit-date {
+  font-size: 14px;
+  color: #757575;
+}
+
+/* Controles y etiquetas para los filtros */
+.credit-controls {
   margin-bottom: 20px;
 }
 
-/* Controles de selección */
-.tasa-cdt-controls {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
+.credit-label {
+  display: block;
+  font-size: 16px;
+  color: #1a237e;
+  margin-bottom: 5px;
 }
 
-.tasa-cdt-label {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #2c3e50;
-  margin-right: 10px;
-}
-
-.tasa-cdt-select {
-  font-size: 1rem;
-  padding: 8px 12px;
-  border: 1px solid #ccc;
+/* Establecemos un ancho fijo y centramos el select */
+.credit-select {
+  width: 300px;               /* Ancho fijo, ajusta según tus necesidades */
+  padding: 8px 10px;
+  font-size: 15px;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  background-color: #fff;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+  margin: 0 auto;             /* Centrado horizontal */
+}
+
+.credit-select:focus {
   outline: none;
-  transition: border 0.3s ease;
+  border-color: #1a237e;
 }
 
-.tasa-cdt-select:focus {
-  border-color: #2c3e50;
-}
-
-/* Tabla de datos */
-.tasa-cdt-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-.tasa-cdt-thead {
-  background-color: #2c3e50;
-}
-
-.tasa-cdt-th {
-  color: #fff;
+/* Botón principal para ejecutar la consulta */
+.credit-button {
+  display: block;             /* Hace que se aplique el margin auto */
+  width: 300px;               /* Ancho fijo */
+  background-color: #1a237e;
+  color: #ffffff;
   padding: 12px;
-  text-align: left;
-  font-weight: 600;
-}
-
-
-
-.tasa-cdt-row:hover {
-  background-color: #f1f1f1;
-}
-
-.tasa-cdt-cell {
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
-}
-
-/* Mensajes de carga o error */
-.tasa-cdt-loading,
-.tasa-cdt-error {
-  text-align: center;
-  font-size: 1.2rem;
-  color: #2c3e50;
-  padding: 20px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .tasa-cdt-container {
-    margin: 20px;
-    padding: 15px;
-  }
-  .tasa-cdt-title {
-    font-size: 1.5rem;
-  }
-  .tasa-cdt-cell,
-  .tasa-cdt-th {
-    padding: 10px;
-  }
-}
-
-.trm-footer {
-  text-align: center;
-  padding: 10px;
-  background-color: #f7f7f7;
-  border-top: 1px solid #ddd;
-  margin-top: 20px;
-  font-size: 1rem;
-  color: #2c3e50;
-}
-/* Estilo para el botón "Mostrar" */
-.tasa-cdt-button {
-  font-size: 1rem;
-  padding: 8px 16px;
-  margin-left: 10px;
-  background-color: #2c3e50;
-  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin: 10px auto 0;        /* Centrado y separación superior */
 }
 
-.tasa-cdt-button:hover {
-  background-color: #1a242f;
+.credit-button:hover {
+  background-color: #303f9f;
 }
 
-
-.tasa-cdt-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
+/* Mensajes de carga y error */
+.credit-loading,
+.credit-error {
+  text-align: center;
+  font-size: 16px;
+  margin-top: 20px;
 }
 
-.tasa-cdt-fecha {
-  font-size: 0.9rem;
+.credit-error {
+  color: #d32f2f;
+}
+
+/* Estilo para la tabla de resultados */
+.credit-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+}
+
+.credit-table-head {
+  background-color: #1a237e;
+  color: #ffffff;
+}
+
+.credit-table-th {
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.credit-table-body {
+  background-color: #ffffff;
+}
+
+.credit-table-row:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.credit-table-cell {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  font-size: 15px;
   color: #333;
-  margin-right: 1rem; /* Ajusta según tu preferencia */
 }
 
-.boton-seleccione{
-  display: flex;
-  align-items: center;
-  gap: 10px; /* Ajusta según necesites */
+/* Estilos para el footer, con fondo oscuro y texto claro */
+.credit-footer {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 14px;
+  color: #ffffff;
+  background-color: #1a237e;
+  padding: 10px 0;
+  border-radius: 0 0 8px 8px;
 }

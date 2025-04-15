@@ -24,7 +24,7 @@ function Login() {
   return (
     <div className="login-container">
       <div className="login-content">
-        <h2>Login</h2>
+        <h2>Inciar Sesión</h2>
         <form onSubmit={handleLogin}>
           <input
             type="email"

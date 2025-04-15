@@ -24,7 +24,7 @@ const TasaCDT = () => {
         const termKeys = Object.keys(headerRow).filter(
           (key) =>
             key !==
-              "ESTABLECIMIENTOS DE CRÉDITO\nTasas efectivas anuales con corte al 2025-03-10" &&
+              "ESTABLECIMIENTOS DE CRÉDITO\nTasas efectivas anuales con corte al 2025-04-11" &&
             key !== "Unnamed: 0"
         );
         // Si no hay términos, dejamos la opción por defecto
@@ -93,7 +93,7 @@ const TasaCDT = () => {
   // Extraemos el header y definimos la clave de identidad
   const headerRow = cdtData[2];
   const identityColumnKey =
-    "ESTABLECIMIENTOS DE CRÉDITO\nTasas efectivas anuales con corte al 2025-03-10";
+    "ESTABLECIMIENTOS DE CRÉDITO\nTasas efectivas anuales con corte al 2025-04-11";
   const termKeys = Object.keys(headerRow).filter(
     (key) => key !== identityColumnKey && key !== "Unnamed: 0"
   );

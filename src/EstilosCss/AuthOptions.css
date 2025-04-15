@@ -1,74 +1,72 @@
-/* AuthOptions.css */
-
-/* Contenedor principal: ocupa todo el viewport, con degradado y padding para móviles */
+/* Fondo general del contenedor que centra el contenido y utiliza un color neutro */
 .auth-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(180deg, #71CEFD 5.5%, #EBF8FF 46.5%, #78D2FF 93%);
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  /* Contenedor central: ancho máximo, fondo blanco semitransparente, bordes redondeados y sombra */
-  .auth-content {
-    width: 100%;
-    max-width: 400px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 40px 20px;
-    text-align: center;
-  }
-  
-  /* Logo centrado con un tamaño adecuado */
-  .logo {
-    width: 250px;
-    height: auto;
-    margin-bottom: 20px;
-  }
-  
-  /* Texto de bienvenida */
-  .welcome-text {
-    font-size: 1.8rem;
-    font-weight: 600;
-    margin-bottom: 30px;
-    color: #333;
-  }
-  
-  /* Botón de Login centrado y simétrico */
-  .login-button {
-    width: 80%;
-    max-width: 300px;
-    padding: 12px;
-    font-size: 1rem;
-    font-weight: bold;
-    background-color: #000;
-    color: #fff;
-    border: none;
-    border-radius: 30px;
-    margin: 20px auto;
-    display: block;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .login-button:hover {
-    background-color: #333;
-  }
-  
-  /* Texto de Sign up */
-  .signup-text {
-    font-size: 0.9rem;
-    color: #555;
-  }
-  
-  .signup-link {
-    font-weight: bold;
-    color: #007bff;
-    cursor: pointer;
-    text-decoration: underline;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5; /* Gris muy claro para fondo, aporta neutralidad */
+}
+
+/* Contenedor principal con un fondo blanco, sombra sutil y bordes redondeados para resaltar el contenido */
+.auth-content {
+  background-color: #ffffff; /* Blanco, para claridad y simplicidad */
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para dar profundidad */
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+/* Estilo para el logo, con un tamaño máximo definido y margen inferior para separar del siguiente contenido */
+.logo {
+  max-width: 150px;
+  margin-bottom: 20px;
+}
+
+/* Texto de bienvenida con tipografía en negrita, en un tono de azul oscuro para transmitir confianza */
+.welcome-text {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1a237e; /* Azul oscuro */
+  margin-bottom: 20px;
+}
+
+/* Botón de "Iniciar Sesión": diseñado para ser el llamado a la acción principal, con transiciones suaves */
+.login-button {
+  background-color: #1a237e;  /* Azul oscuro, sólido y profesional */
+  color: #ffffff;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Efecto hover para el botón, cambiando a un azul ligeramente más claro para feedback visual */
+.login-button:hover {
+  background-color: #303f9f;
+}
+
+/* Texto secundario para invitar al registro, en un tono gris que aporte equilibrio */
+.signup-text {
+  font-size: 14px;
+  margin-top: 20px;
+  color: #757575; /* Gris medio */
+}
+
+/* Enlace interactivo para registrarse, resaltado con azul y subrayado, con transición para mejorar la experiencia */
+.signup-link {
+  color: #1a237e;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+/* Cambio de color en hover para el enlace de registro */
+.signup-link:hover {
+  color: #303f9f;
+}
