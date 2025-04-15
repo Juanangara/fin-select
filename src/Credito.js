@@ -90,9 +90,6 @@ const Credito = () => {
       return;
     }
     if (!activitySaved) {
-      const fullName = user.displayName || "Sin nombre";
-      const nameParts = fullName.split(" ");
-    
       const userDataToSave = {
         userId: user.uid,
         correo: user.email || "Sin correo",
