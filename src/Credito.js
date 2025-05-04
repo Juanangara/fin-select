@@ -3,6 +3,8 @@ import "./EstilosCss/Credito.css";
 import { creditOptions } from "./ArreglosCredito"; // Ajusta la ruta
 import { auth, dbRT } from "./firebase"; // Ajusta la ruta
 import { ref, push } from "firebase/database";
+import finSelectLogo from "./fin-select.png";
+
 
 const Credito = () => {
   // Obtenemos los tipos disponibles (las claves del objeto creditOptions)
@@ -19,6 +21,8 @@ const Credito = () => {
   const [fechaCorte, setFechaCorte] = useState("");
   // Flag para evitar guardar actividad duplicada
   const [activitySaved, setActivitySaved] = useState(false);
+  // Estado para controlar la visualización de los resultados
+  const [showAllResults, setShowAllResults] = useState(false);
 
   // Función para obtener las 2 fechas de corte más recientes
   const fetchFechasCorte = async () => {
@@ -64,7 +68,6 @@ const Credito = () => {
           "nombre_entidad, sum(tasa_efectiva_promedio * montos_desembolsados)/sum(montos_desembolsados) as tasa_promedio",
         "$group": "nombre_entidad",
         "$order": "tasa_promedio ASC",
-        "$limit": "5",
       });
 
       const response = await fetch(
@@ -138,92 +141,99 @@ const Credito = () => {
 
   return (
     <div className="credit-container">
+      <div className="logo-header">
+        <img src={finSelectLogo} alt="Fin Select" className="logo" />
+      </div>
+  
       <div className="credit-header">
-        <h2 className="credit-title">Consulta de créditos</h2>
+        <h2 className="credit-title">créditos</h2>
         {fechaCorte && (
           <p className="credit-date">
             Fecha de corte: {formatearFecha(fechaCorte)}
           </p>
         )}
       </div>
-
-      <div className="credit-controls">
-        <label className="credit-label">
-          Tipo de Crédito:
-          <select
-            className="credit-select"
-            value={selectedTipo}
-            onChange={(e) => {
-              setSelectedTipo(e.target.value);
-              setSelectedProducto("");
-              setSelectedPlazo("");
-              setActivitySaved(false);
-            }}
-          >
-            <option value="">Seleccione</option>
-            {tiposDisponibles.map((tipo) => (
-              <option key={tipo} value={tipo}>
-                {tipo}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
-
-      {selectedTipo && (
+  
+      {/* wrapper que crea el grid de 2 cols + 1 col */}
+      <div className="controls-wrapper">
         <div className="credit-controls">
           <label className="credit-label">
-            Producto:
+            Tipo de Crédito:
             <select
               className="credit-select"
-              value={selectedProducto}
+              value={selectedTipo}
               onChange={(e) => {
-                setSelectedProducto(e.target.value);
+                setSelectedTipo(e.target.value);
+                setSelectedProducto("");
                 setSelectedPlazo("");
                 setActivitySaved(false);
               }}
             >
               <option value="">Seleccione</option>
-              {productosDisponibles.map((prod) => (
-                <option key={prod} value={prod}>
-                  {prod}
+              {tiposDisponibles.map((tipo) => (
+                <option key={tipo} value={tipo}>
+                  {tipo}
                 </option>
               ))}
             </select>
           </label>
         </div>
-      )}
-
-      {selectedProducto && (
-        <div className="credit-controls">
-          <label className="credit-label">
-            Plazo:
-            <select
-              className="credit-select"
-              value={selectedPlazo}
-              onChange={(e) => {
-                setSelectedPlazo(e.target.value);
-                setActivitySaved(false);
-              }}
-            >
-              <option value="">Seleccione</option>
-              {plazosDisponibles.map((plazo, index) => (
-                <option key={index} value={plazo}>
-                  {plazo}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
-      )}
-
+  
+        {selectedTipo && (
+          <div className="credit-controls">
+            <label className="credit-label">
+              Producto:
+              <select
+                className="credit-select"
+                value={selectedProducto}
+                onChange={(e) => {
+                  setSelectedProducto(e.target.value);
+                  setSelectedPlazo("");
+                  setActivitySaved(false);
+                }}
+              >
+                <option value="">Seleccione</option>
+                {productosDisponibles.map((prod) => (
+                  <option key={prod} value={prod}>
+                    {prod}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+        )}
+  
+        {selectedProducto && (
+          <div className="credit-controls">
+            <label className="credit-label">
+              Plazo:
+              <select
+                className="credit-select"
+                value={selectedPlazo}
+                onChange={(e) => {
+                  setSelectedPlazo(e.target.value);
+                  setActivitySaved(false);
+                }}
+              >
+                <option value="">Seleccione</option>
+                {plazosDisponibles.map((plazo, index) => (
+                  <option key={index} value={plazo}>
+                    {plazo}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+        )}
+      </div>{/* .controls-wrapper */}
+  
       <button className="credit-button" onClick={handleShowResults}>
         Mostrar
       </button>
-
+  
       {loading && <p className="credit-loading">Cargando...</p>}
       {error && <p className="credit-error">Error: {error}</p>}
-
+  
       {results.length > 0 && (
         <div>
           <table className="credit-table">
@@ -235,23 +245,30 @@ const Credito = () => {
               </tr>
             </thead>
             <tbody className="credit-table-body">
-              {results.map((item, index) => (
-                <tr key={index} className="credit-table-row">
-                  <td className="credit-table-cell">{index + 1}</td>
-                  <td className="credit-table-cell">{item.nombre_entidad}</td>
-                  <td className="credit-table-cell">
-                    {parseFloat(item.tasa_promedio).toFixed(1)}
-                  </td>
-                </tr>
-              ))}
+              {results
+                .slice(0, showAllResults ? results.length : 5)
+                .map((item, index) => (
+                  <tr key={index} className="credit-table-row">
+                    <td className="credit-table-cell">{index + 1}</td>
+                    <td className="credit-table-cell">{item.nombre_entidad}</td>
+                    <td className="credit-table-cell">
+                      {parseFloat(item.tasa_promedio).toFixed(1)}
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
+          <button
+            className="credit-button"
+            onClick={() => setShowAllResults(!showAllResults)}
+          >
+            {showAllResults ? "Ver menos" : "Ver más"}
+          </button>
         </div>
       )}
-
-      <footer className="credit-footer">© 2025 Consulta de créditos</footer>
     </div>
   );
+  
 };
 
 export default Credito;

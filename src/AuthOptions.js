@@ -10,10 +10,7 @@ function AuthOptions() {
   return (
     <div className="auth-container">
       <div className="auth-content">
-        {/* Logo o imagen de marca */}
         <img src={finSelectLogo} alt="Fin Select" className="logo" />
-        
-        <p className="welcome-text">Bienvenido</p>
         <button className="login-button" onClick={() => navigate("/login")}>
           Inciar Sesión
         </button>

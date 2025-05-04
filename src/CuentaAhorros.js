@@ -5,13 +5,13 @@ import "./EstilosCss/CuentaAhorros.css";
 import { auth, dbRT } from "./firebase";
 import { ref, push } from "firebase/database";
 
-
 const CuentaAhorros = () => {
   const [data, setData] = useState(null);
   const [selectedOption, setSelectedOption] = useState("Seleccione una opción");
   const [loading, setLoading] = useState(true);
   const [showResults, setShowResults] = useState(false);
   const [activitySaved, setActivitySaved] = useState(false);
+  const [showAllResults, setShowAllResults] = useState(false); // Estado para controlar "Ver más" y "Ver menos"
 
   // Opciones fijas según lo solicitado
   const options = [
@@ -32,15 +32,11 @@ const CuentaAhorros = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.error(
-          "Error al cargar CuentaAhorroPersonaNatural.json:",
-          error
-        );
+        console.error("Error al cargar CuentaAhorroPersonaNatural.json:", error);
         setLoading(false);
       });
   }, []);
 
-  // Cada vez que se cambie la opción, reiniciamos los resultados y el flag para guardar actividad
   const handleSelectChange = (e) => {
     setSelectedOption(e.target.value);
     setShowResults(false);
@@ -53,7 +49,6 @@ const CuentaAhorros = () => {
       return;
     }
 
-    // Obtenemos el usuario actual
     const user = auth.currentUser;
     if (!user) {
       alert("No hay usuario autenticado. Por favor inicie sesión.");
@@ -62,8 +57,6 @@ const CuentaAhorros = () => {
 
     // Solo guardamos la actividad si aún no se ha guardado para esta selección
     if (!activitySaved) {
-      // Extraer información del usuario (displayName, email, etc.)
-      // Se puede obtener el nombre completo desde displayName, si se requiere se puede procesar
       const userDataToSave = {
         userId: user.uid,
         correo: user.email || "Sin correo",
@@ -86,13 +79,7 @@ const CuentaAhorros = () => {
 
   if (loading) return <div className="cuenta-ahorro-loading">Cargando...</div>;
   if (!data)
-    return (
-      <div className="cuenta-ahorro-error">Error al cargar los datos.</div>
-    );
-
-  // Se asume que la fila de encabezado se encuentra en el índice 1 del JSON.
-  // Si no se utiliza, se elimina la variable.
-  // const headerRow = data[1];
+    return <div className="cuenta-ahorro-error">Error al cargar los datos.</div>;
 
   // Procesamos los datos a partir del índice 2, en pares: una fila para la entidad y la siguiente para las tasas.
   const pairedData = [];
@@ -102,7 +89,7 @@ const CuentaAhorros = () => {
     if (!ratesRow) break;
     const entidad =
       entityRow[
-        "ESTABLECIMIENTOS DE CRÉDITO\nTasas efectivas anuales con corte al 2025-04-11"
+        "ESTABLECIMIENTOS DE CRÉDITO\nTasas efectivas anuales con corte al 2025-04-29"
       ];
     pairedData.push({
       entidad,
@@ -120,7 +107,6 @@ const CuentaAhorros = () => {
   );
 
   // Calculamos el ranking para la opción seleccionada.
-  // Si el valor numérico es 0 (o "0" o "0.00%"), se mostrará "Sin datos".
   const rankedData = validData
     .map((item) => {
       const originalValue = item[selectedOption];
@@ -135,14 +121,11 @@ const CuentaAhorros = () => {
         displayValue,
       };
     })
-    .sort((a, b) => b.rate - a.rate)
-    .slice(0, 5);
+    .sort((a, b) => b.rate - a.rate);
 
   return (
     <div className="cuenta-ahorro-container">
-      <h1 className="cuenta-ahorro-title">
-        Mejores Tasas de Cuenta de Ahorro
-      </h1>
+      <h1 className="cuenta-ahorro-title">Mejores Tasas de Cuenta de Ahorro</h1>
       <div className="cuenta-ahorro-controls">
         <label htmlFor="option" className="cuenta-ahorro-label">
           Opción:
@@ -164,24 +147,32 @@ const CuentaAhorros = () => {
         </button>
       </div>
       {showResults && (
-        <table className="cuenta-ahorro-table">
-          <thead className="cuenta-ahorro-thead">
-            <tr>
-              <th className="cuenta-ahorro-th">Ranking</th>
-              <th className="cuenta-ahorro-th">Entidad</th>
-              <th className="cuenta-ahorro-th">Tasa</th>
-            </tr>
-          </thead>
-          <tbody className="cuenta-ahorro-tbody">
-            {rankedData.map((item, index) => (
-              <tr key={index} className="cuenta-ahorro-row">
-                <td className="cuenta-ahorro-cell">{index + 1}</td>
-                <td className="cuenta-ahorro-cell">{item.entidad}</td>
-                <td className="cuenta-ahorro-cell">{item.displayValue}</td>
+        <div>
+          <table className="cuenta-ahorro-table">
+            <thead className="cuenta-ahorro-thead">
+              <tr>
+                <th className="cuenta-ahorro-th">Ranking</th>
+                <th className="cuenta-ahorro-th">Entidad</th>
+                <th className="cuenta-ahorro-th">Tasa</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="cuenta-ahorro-tbody">
+              {rankedData.slice(0, showAllResults ? rankedData.length : 5).map((item, index) => (
+                <tr key={index} className="cuenta-ahorro-row">
+                  <td className="cuenta-ahorro-cell">{index + 1}</td>
+                  <td className="cuenta-ahorro-cell">{item.entidad}</td>
+                  <td className="cuenta-ahorro-cell">{item.displayValue}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button
+            className="cuenta-ahorro-button"
+            onClick={() => setShowAllResults(!showAllResults)}
+          >
+            {showAllResults ? "Ver menos" : "Ver más"}
+          </button>
+        </div>
       )}
       <footer className="trm-footer">© 2025 Consulta cuenta de ahorros</footer>
     </div>

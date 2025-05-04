@@ -1,59 +1,104 @@
-/* Contenedor principal de la Home */
+/* Home.css */
+
+/* Contenedor full-screen con degradado vertical que acaba en blanco */
 .home-container {
-  max-width: 400px;
-  margin: 40px auto;
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  font-family: 'Helvetica', 'Arial', sans-serif;
-  text-align: center;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;      /* Logo arriba, botones abajo */
+  align-items: center;         /* Centrado horizontal */
+  justify-content: flex-start; /* Desde arriba hacia abajo */
+  background: linear-gradient(
+    180deg,
+    #71CEFD 0%,
+    #ffffff 68%
+  );
+  overflow: hidden;
+  box-sizing: border-box;
+  padding-top: 4%;             /* Un poco de espacio superior */
 }
 
-/* Encabezado con el logo */
+/* Header con logo */
 .home-header {
-  margin-bottom: 30px;
-}
-
-.home-logo {
-  max-width: 150px;
   width: 100%;
+  max-width: 350px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2%;           /* Ajusta para acercarlo a los botones */
+  position: relative;
 }
 
-/* Contenedor de botones: organizados verticalmente */
+/* Logo centrado y escalado */
+.home-logo {
+  width: 150px;                /* ancho base */
+  max-width: 70%;
+  height: auto;
+  display: block;
+  transform-origin: bottom center;
+  transform: scale(1.6);       /* escala fija para hacerlo más grande */
+  transition: opacity 0.2s;
+}
+
+.home-logo:hover {
+  opacity: 0.9;
+}
+
+/* Contenedor de los botones */
 .home-content {
+  width: 100%;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  align-items: center;
+  gap: 1.5rem;                 /* separación uniforme */
+  padding: 0 5%;
+  box-sizing: border-box;
 }
 
-/* Botones generales: fondo azul oscuro, texto en blanco, transiciones suaves */
+/* Botones genéricos */
 .home-button {
-  background-color: #1a237e;
-  color: #ffffff;
-  padding: 12px;
-  font-size: 16px;
-  font-weight: bold;
+  width: 100%;
+  padding: 1rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background-color: #ffffff;
+  color: #003366;
   border: none;
-  border-radius: 4px;
+  border-radius: 2rem;         /* píldora */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  width: 300px;         /* Ancho fijo */
-  margin: 0 auto;       /* Centramos horizontalmente */
+  transition: opacity 0.2s, transform 0.2s;
 }
 
-/* Efecto hover para los botones */
 .home-button:hover {
-  background-color: #303f9f;
+  opacity: 0.9;
+  transform: translateY(-2px);
 }
 
-/* Botón de cerrar sesión: se destaca con un tono rojo para mayor diferenciación */
-.logout-button {
-  background-color: #d32f2f;
-  width: 300px;         /* Ancho fijo */
-  margin: 0 auto;       /* Centramos horizontalmente */
+/* Botón “Cerrar sesión” */
+.home-button.logout-button {
+  background-color: #000000;
+  color: #ffffff;
 }
 
-.logout-button:hover {
-  background-color: #e53935;
+/* Responsive para móviles muy pequeños */
+@media (max-width: 360px) {
+  .home-container {
+    padding-top: 6%;
+  }
+  .home-header {
+    margin-bottom: 4%;
+  }
+  .home-logo {
+    width: 120px;
+    transform: scale(1.2);
+  }
+  .home-content {
+    gap: 1rem;
+    padding: 0 8%;
+  }
+  .home-button {
+    font-size: 1rem;
+    padding: 1.2rem 0;
+  }
 }

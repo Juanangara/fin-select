@@ -1,91 +1,142 @@
-/* Contenedor principal: centra el formulario en la pantalla, con fondo neutro */
+/* Login.css - actualizado con overrides !important para back-button */
+
+/* Contenedor full-screen con degradiente vertical y disposición en columna */
 .login-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: linear-gradient(180deg, #71CEFD 0%, #FFFFFF 41%);
+  overflow: hidden;
+  box-sizing: border-box;
+  padding-top: 0;
+}
+
+/* Header que contiene el logo */
+.login-header {
+  width: 100%;
+  max-width: 350px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: #f5f5f5; /* Gris muy claro para ofrecer neutralidad */
+  margin-bottom: -5%;
+  position: relative;
 }
 
-/* Contenedor interno: fondo blanco, sombra sutil, padding y bordes redondeados */
+/* Logo centrado y siempre escalado hacia arriba */
+.login-header .logo {
+  width: 70%;
+  max-width: 350px;
+  height: auto;
+  display: block;
+  transform-origin: bottom center;
+  transform: scale(1.2);
+  transition: opacity 0.2s;
+}
+.login-header .logo:hover {
+  opacity: 0.9;
+}
+
+/* Caja de contenido con fondo blanco y bordes redondeados */
 .login-content {
-  background-color: #ffffff;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 400px;
-  text-align: center;
-  font-family: 'Helvetica', 'Arial', sans-serif;
+  max-width: 450px;
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  padding: 6% 5%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Título principal */
-.login-content h2 {
-  font-size: 26px;
-  color: #1a237e; /* Azul oscuro */
-  margin-bottom: 25px;
+/* Formulario: inputs centrados y espaciados */
+.login-content form {
+  width: 100%;
+  display: flex;
+  margin-top: -2%;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Estilos para los inputs de correo y contraseña */
-.login-content input[type="email"],
-.login-content input[type="password"] {
-  width: 92%;
-  padding: 12px 15px;
-  margin-bottom: 20px;
-  font-size: 16px;
+/* Estilos de los inputs */
+.login-content input {
+  width: 100%;
+  max-width: 800px;
+  padding: 4% 3%;
+  margin-bottom: 4%;
+  font-size: 1rem;
   border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-  transition: border-color 0.3s ease;
-}
-
-/* Enfoque en el input: resalta el borde con el color corporativo */
-.login-content input[type="email"]:focus,
-.login-content input[type="password"]:focus {
-  outline: none;
-  border-color: #1a237e;
+  border-radius: 0.5rem;
+  background-color: #f2f9ff;
+  box-sizing: border-box;
 }
 
 /* Mensaje de error */
 .error-message {
-  font-size: 14px;
-  color: #d32f2f;
-  margin-bottom: 20px;
+  color: #e74c3c;
+  font-size: 0.9rem;
+  margin-bottom: 4%;
+  text-align: center;
 }
 
-/* Botón de inicio de sesión */
+/* Botón de iniciar sesión */
 .login-button {
-  width: 100%;
-  background-color: #1a237e;
-  color: #ffffff;
-  padding: 12px;
-  font-size: 16px;
-  font-weight: bold;
+  width: 70%;
+  max-width: 500px;
+  padding: 4% 0;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #000;
+  color: #fff;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-bottom: 15px;
+  margin-bottom: 5%;
+  transition: opacity 0.2s ease;
+  box-sizing: border-box;
+  border-radius: 0.5rem;
 }
-
-/* Hover para el botón de inicio de sesión */
 .login-button:hover {
-  background-color: #303f9f;
+  opacity: 0.85;
 }
 
-/* Botón para regresar */
+/* Botón de volver - overrides con !important */
 .back-button {
-  background-color: #757575; /* Gris medio para diferenciarlo */
-  color: #ffffff;
-  padding: 10px 15px;
-  font-size: 14px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  width: 100% !important;
+  max-width: 700px !important;
+  padding: 4% 0 !important;
+  font-size: 1rem !important;
+  background-color: #f2f9ff !important;   /* override al fondo */
+  color: #336b87 !important;              /* override al texto */
+  border: 1px solid #ddd !important;      /* override al borde */
+  border-radius: 0.5rem !important;       /* igual que los inputs */
+  box-shadow: none !important;            /* quita cualquier sombra */
+  cursor: pointer !important;
+  transition: opacity 0.2s ease !important;
+  box-sizing: border-box !important;
+}
+.back-button:hover {
+  opacity: 0.9 !important;
 }
 
-/* Hover para el botón de regresar */
-.back-button:hover {
-  background-color: #616161;
+/* Responsive: pantallas muy pequeñas */
+@media (max-width: 360px) {
+  .login-container { padding-top: 8%; }
+  .login-header { margin-bottom: 3%; }
+  .login-header .logo {
+    width: 70%;
+    transform: scale(1.2);
+    transform-origin: bottom center;
+  }
+  .login-content { padding: 8% 6%; }
+  .login-content input,
+  .login-button,
+  .back-button {
+    width: 95% !important;
+    max-width: none !important;
+    font-size: 0.9rem !important;
+    padding: 6% 0 !important;
+  }
 }

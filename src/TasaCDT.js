@@ -1,4 +1,3 @@
-// TasaCDT.js
 import React, { useState, useEffect } from "react";
 import "./EstilosCss/TasaCDT.css";
 
@@ -11,6 +10,7 @@ const TasaCDT = () => {
   const [loading, setLoading] = useState(true);
   const [showResults, setShowResults] = useState(false);
   const [activitySaved, setActivitySaved] = useState(false);
+  const [showAllResults, setShowAllResults] = useState(false); // Estado para controlar "Ver más" y "Ver menos"
 
   useEffect(() => {
     // Se asume que CDT.json se encuentra en la carpeta public
@@ -24,7 +24,7 @@ const TasaCDT = () => {
         const termKeys = Object.keys(headerRow).filter(
           (key) =>
             key !==
-              "ESTABLECIMIENTOS DE CRÉDITO\nTasas efectivas anuales con corte al 2025-04-11" &&
+              "ESTABLECIMIENTOS DE CRÉDITO\nTasas efectivas anuales con corte al 2025-04-29" &&
             key !== "Unnamed: 0"
         );
         // Si no hay términos, dejamos la opción por defecto
@@ -93,7 +93,7 @@ const TasaCDT = () => {
   // Extraemos el header y definimos la clave de identidad
   const headerRow = cdtData[2];
   const identityColumnKey =
-    "ESTABLECIMIENTOS DE CRÉDITO\nTasas efectivas anuales con corte al 2025-04-11";
+    "ESTABLECIMIENTOS DE CRÉDITO\nTasas efectivas anuales con corte al 2025-04-29";
   const termKeys = Object.keys(headerRow).filter(
     (key) => key !== identityColumnKey && key !== "Unnamed: 0"
   );
@@ -113,7 +113,7 @@ const TasaCDT = () => {
   const rankedData = dataRows
     .map((row) => {
       let rawValue = row[selectedTermKey];
-      if (rawValue == null) rawValue = "0 %";
+      if (rawValue === "-" || rawValue == null) rawValue = "sin datos"; // Reemplazar "-" o nulos por "sin datos"
       let rate = parseFloat(rawValue.toString().replace("%", "").trim());
       if (isNaN(rate)) {
         rate = 0;
@@ -125,7 +125,7 @@ const TasaCDT = () => {
       };
     })
     .sort((a, b) => b.rate - a.rate)
-    .slice(0, 5);
+    .slice(0, -1); // Excluir la última fila de la tabla
 
   return (
     <div className="tasa-cdt-container">
@@ -152,24 +152,32 @@ const TasaCDT = () => {
         </button>
       </div>
       {showResults && (
-        <table className="tasa-cdt-table">
-          <thead className="tasa-cdt-thead">
-            <tr>
-              <th className="tasa-cdt-th">Ranking</th>
-              <th className="tasa-cdt-th">Entidad</th>
-              <th className="tasa-cdt-th">Tasa</th>
-            </tr>
-          </thead>
-          <tbody className="tasa-cdt-tbody">
-            {rankedData.map((item, index) => (
-              <tr key={index} className="tasa-cdt-row">
-                <td className="tasa-cdt-cell">{index + 1}</td>
-                <td className="tasa-cdt-cell">{item.identidad}</td>
-                <td className="tasa-cdt-cell">{item.rawValue}</td>
+        <div>
+          <table className="tasa-cdt-table">
+            <thead className="tasa-cdt-thead">
+              <tr>
+                <th className="tasa-cdt-th">Ranking</th>
+                <th className="tasa-cdt-th">Entidad</th>
+                <th className="tasa-cdt-th">Tasa</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="tasa-cdt-tbody">
+              {rankedData.slice(0, showAllResults ? rankedData.length : 5).map((item, index) => (
+                <tr key={index} className="tasa-cdt-row">
+                  <td className="tasa-cdt-cell">{index + 1}</td>
+                  <td className="tasa-cdt-cell">{item.identidad}</td>
+                  <td className="tasa-cdt-cell">{item.rawValue}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button
+            className="tasa-cdt-button"
+            onClick={() => setShowAllResults(!showAllResults)}
+          >
+            {showAllResults ? "Ver menos" : "Ver más"}
+          </button>
+        </div>
       )}
       <footer className="trm-footer">© 2025 Consulta de tasas-CDT</footer>
     </div>

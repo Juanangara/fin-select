@@ -4,6 +4,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
 import { useNavigate } from "react-router-dom";
 import "./EstilosCss/Login.css"; // Importa la hoja de estilos
+import finSelectLogo from "./fin-select.png"; // Asegúrate de que la ruta sea correcta
 
 function Login() {
   const navigate = useNavigate();
@@ -23,8 +24,10 @@ function Login() {
 
   return (
     <div className="login-container">
+      <div className="login-header">
+        <img src={finSelectLogo} alt="Fin Select" className="logo" />
+      </div>
       <div className="login-content">
-        <h2>Inciar Sesión</h2>
         <form onSubmit={handleLogin}>
           <input
             type="email"
@@ -45,7 +48,12 @@ function Login() {
             Iniciar Sesión
           </button>
         </form>
-        <button className="back-button" onClick={() => navigate("/")}>
+
+        <button
+          type="button"
+          className="back-button"
+          onClick={() => navigate("/")}
+        >
           Volver
         </button>
       </div>
