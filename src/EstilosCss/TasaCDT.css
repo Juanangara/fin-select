@@ -1,106 +1,138 @@
-/* Contenedor principal */
+/* TasaCdt.css */
+
+/* 1. Contenedor full‑screen con degradado vertical */
 .tasa-cdt-container {
-  padding: 40px 20px;
-  max-width: 900px;
-  margin: 0 auto;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  font-family: 'Helvetica', 'Arial', sans-serif;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;     /* arranca desde arriba */
+  align-items: center;
+  padding: 0 1rem 2rem;            /* quita padding‑top extra */
+  background: linear-gradient(180deg, #71cefd 0%, #ebf8ff 50%, #ffffff 100%);
+  box-sizing: border-box;
 }
 
-/* Título */
+/* 2. Logo siempre arriba, centrado */
+.logo-header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0 0;              /* espacio superior para separar del borde */
+}
+.logo-header .logoTasaCDT {
+  width: 260px;
+  max-width: 100%;
+  transform: scale(1.2);
+  margin-bottom: 1.5rem;           /* espacio abajo del logo */
+}
+
+/* 3. Título justo debajo del logo */
 .tasa-cdt-title {
-  font-size: 28px;
-  color: #1a237e;
+  background: #ffffff;
+  color: #003355;
+  font-size: 1.75rem;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  border-radius: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin: 1rem auto;               /* espacio arriba y abajo */
   text-align: center;
-  margin-bottom: 30px;
+  max-width: 80%;
+  width: 100%;
 }
 
-/* Controles de selección */
+/* 4. Controles debajo del título */
 .tasa-cdt-controls {
   display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem auto 3rem;        /* 1.5rem arriba (del título), 3rem abajo */
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
-  margin-bottom: 30px;
-  align-items: center;
 }
 
 .tasa-cdt-label {
-  font-size: 16px;
-  color: #333;
-  font-weight: 600;
+  font-size: 1rem;
+  color: #003355;
 }
 
 .tasa-cdt-select {
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  min-width: 200px;
-  background-color: #f9f9f9;
-  transition: border-color 0.3s ease;
-}
-
-.tasa-cdt-select:focus {
-  outline: none;
-  border-color: #1a237e;
-}
-
-/* Botón de mostrar */
-.tasa-cdt-button {
-  background-color: #1a237e;
-  color: #fff;
+  appearance: none;
+  background: #f0f0f0;
   border: none;
-  padding: 10px 20px;
-  font-weight: bold;
-  font-size: 15px;
-  border-radius: 4px;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  border-radius: 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  min-width: 180px;
+}
+
+.tasa-cdt-button {
+  background: #ffffff;
+  color: #003355;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
 }
 
 .tasa-cdt-button:hover {
-  background-color: #303f9f;
+  background: #f5f5f5;
+  transform: translateY(-2px);
 }
 
-/* Tabla de resultados */
+/* 5. Resultados (tabla y botón “Ver más/menos”) */
+.tasa-cdt-table-wrapper {
+  position: relative;
+  width: 90%;
+  max-width: 700px;
+  margin: 0 auto 1.5rem;
+}
+
 .tasa-cdt-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+}
+
+.tasa-cdt-table th,
+.tasa-cdt-table td {
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid #e0e0e0;
 }
 
 .tasa-cdt-thead {
-  background-color: #1a237e;
-  color: #ffffff;
+  background: #e0f7ff;
 }
 
-.tasa-cdt-th,
-.tasa-cdt-cell {
-  padding: 12px;
-  text-align: center;
-  border: 1px solid #ddd;
+.tasa-cdt-th {
+  color: #003355;
+  font-size: 1.1rem;
 }
 
 .tasa-cdt-row:nth-child(even) {
-  background-color: #f3f3f3;
+  background: #fafafa;
 }
 
-/* Estados de carga y error */
-.tasa-cdt-loading,
-.tasa-cdt-error {
-  text-align: center;
-  color: #666;
-  font-size: 16px;
-  margin-top: 20px;
+.tasa-cdt-cell {
+  color: #333333;
+  font-size: 1rem;
 }
 
-/* Footer */
-.trm-footer {
-  text-align: center;
-  margin-top: 40px;
-  font-size: 14px;
-  color: #999;
+.tasa-cdt-showmore {
+  position: absolute;
+  bottom: -2.5rem;
+  right: 0;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  margin: 0;
 }
+

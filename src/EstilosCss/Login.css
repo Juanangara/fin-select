@@ -121,22 +121,3 @@
   opacity: 0.9 !important;
 }
 
-/* Responsive: pantallas muy pequeñas */
-@media (max-width: 360px) {
-  .login-container { padding-top: 8%; }
-  .login-header { margin-bottom: 3%; }
-  .login-header .logo {
-    width: 70%;
-    transform: scale(1.2);
-    transform-origin: bottom center;
-  }
-  .login-content { padding: 8% 6%; }
-  .login-content input,
-  .login-button,
-  .back-button {
-    width: 95% !important;
-    max-width: none !important;
-    font-size: 0.9rem !important;
-    padding: 6% 0 !important;
-  }
-}

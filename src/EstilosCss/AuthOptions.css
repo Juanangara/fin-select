@@ -74,21 +74,4 @@
   cursor: pointer;
 }
 
-/* Responsive: ajustes para móviles muy pequeños */
-@media (max-width: 360px) {
-  .auth-content {
-    padding: 10% 8%;
-  }
-  .auth-content .logo {
-    width: 180px;             /* caja un poco más pequeña */
-    transform: scale(1.4);    /* escala ligeramente menor */
-    transform-origin: bottom center;
-  }
-  .auth-content .login-button {
-    padding: 6% 0;
-    font-size: 0.9rem;
-  }
-  .auth-content .signup-text {
-    font-size: 0.8rem;
-  }
-}
+

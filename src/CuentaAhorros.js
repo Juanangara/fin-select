@@ -5,6 +5,8 @@ import "./EstilosCss/CuentaAhorros.css";
 import { auth, dbRT } from "./firebase";
 import { ref, push } from "firebase/database";
 
+import finSelectLogo from "./fin-select.png";
+
 const CuentaAhorros = () => {
   const [data, setData] = useState(null);
   const [selectedOption, setSelectedOption] = useState("Seleccione una opción");
@@ -32,7 +34,10 @@ const CuentaAhorros = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error al cargar CuentaAhorroPersonaNatural.json:", error);
+        console.error(
+          "Error al cargar CuentaAhorroPersonaNatural.json:",
+          error
+        );
         setLoading(false);
       });
   }, []);
@@ -79,7 +84,9 @@ const CuentaAhorros = () => {
 
   if (loading) return <div className="cuenta-ahorro-loading">Cargando...</div>;
   if (!data)
-    return <div className="cuenta-ahorro-error">Error al cargar los datos.</div>;
+    return (
+      <div className="cuenta-ahorro-error">Error al cargar los datos.</div>
+    );
 
   // Procesamos los datos a partir del índice 2, en pares: una fila para la entidad y la siguiente para las tasas.
   const pairedData = [];
@@ -125,7 +132,16 @@ const CuentaAhorros = () => {
 
   return (
     <div className="cuenta-ahorro-container">
+      <div className="logo-header">
+        <img
+          src={finSelectLogo}
+          alt="Fin Select"
+          className="logocuentaAhorro"
+        />
+      </div>
+
       <h1 className="cuenta-ahorro-title">Mejores Tasas de Cuenta de Ahorro</h1>
+
       <div className="cuenta-ahorro-controls">
         <label htmlFor="option" className="cuenta-ahorro-label">
           Opción:
@@ -146,8 +162,9 @@ const CuentaAhorros = () => {
           Mostrar
         </button>
       </div>
+
       {showResults && (
-        <div>
+        <div className="cuenta-ahorro-table-wrapper">
           <table className="cuenta-ahorro-table">
             <thead className="cuenta-ahorro-thead">
               <tr>
@@ -157,15 +174,18 @@ const CuentaAhorros = () => {
               </tr>
             </thead>
             <tbody className="cuenta-ahorro-tbody">
-              {rankedData.slice(0, showAllResults ? rankedData.length : 5).map((item, index) => (
-                <tr key={index} className="cuenta-ahorro-row">
-                  <td className="cuenta-ahorro-cell">{index + 1}</td>
-                  <td className="cuenta-ahorro-cell">{item.entidad}</td>
-                  <td className="cuenta-ahorro-cell">{item.displayValue}</td>
-                </tr>
-              ))}
+              {rankedData
+                .slice(0, showAllResults ? rankedData.length : 5)
+                .map((item, index) => (
+                  <tr key={index} className="cuenta-ahorro-row">
+                    <td className="cuenta-ahorro-cell">{index + 1}</td>
+                    <td className="cuenta-ahorro-cell">{item.entidad}</td>
+                    <td className="cuenta-ahorro-cell">{item.displayValue}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
+
           <button
             className="cuenta-ahorro-button"
             onClick={() => setShowAllResults(!showAllResults)}
@@ -174,7 +194,6 @@ const CuentaAhorros = () => {
           </button>
         </div>
       )}
-      <footer className="trm-footer">© 2025 Consulta cuenta de ahorros</footer>
     </div>
   );
 };

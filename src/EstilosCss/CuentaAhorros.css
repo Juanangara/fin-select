@@ -1,125 +1,140 @@
-/* Contenedor principal: establece un ancho máximo, fondo blanco, padding, bordes redondeados y sombra */
+/* CuentaAhorro.css */
+
+/* Contenedor full-screen con degradado vertical acabando en blanco */
 .cuenta-ahorro-container {
-  max-width: 800px;
-  margin: 40px auto;
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  font-family: 'Helvetica', 'Arial', sans-serif;
-}
-
-/* Título principal: centrado, con fuente grande y color azul oscuro */
-.cuenta-ahorro-title {
-  text-align: center;
-  font-size: 28px;
-  font-weight: bold;
-  color: #1a237e;
-  margin-bottom: 20px;
-}
-
-/* Controles: contenedor de la selección y botón, con espaciado y alineación central */
-.cuenta-ahorro-controls {
-  margin-bottom: 20px;
+  width: 100vw;
+  min-height: 100vh;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
+  background: linear-gradient(180deg, #71cefd 0%, #ebf8ff 50%, #ffffff 100%);
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+
+/* Header con logo */
+.logo-header {
+  margin-bottom: -5%;
+}
+
+.logo-header .logocuentaAhorro {
+  width: 260px;
+  max-width: 100%;
+  margin-top: 50px;
+  display: block;
+  margin: 0 auto;
+  transform-origin: bottom center;
+  transform: scale(1.2);
+}
+
+/* Título principal como píldora */
+.cuenta-ahorro-title {
+  background: #ffffff;
+  color: #003355;
+  font-size: 1.75rem;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  border-radius: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+  text-align: center;
+  max-width: 80%;
+  width: 100%;
+}
+
+/* Controles: select + botón Mostrar */
+.cuenta-ahorro-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
 }
 
-/* Etiqueta de los controles: tamaño y color coherente con el estilo empresarial */
 .cuenta-ahorro-label {
-  font-size: 16px;
-  color: #1a237e;
-  margin-right: 10px;
+  font-size: 1rem;
+  color: #003355;
 }
 
-/* Selector (select): fondo claro, borde sutil y transición al enfocarse */
 .cuenta-ahorro-select {
-  padding: 8px 10px;
-  font-size: 15px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-  transition: border-color 0.3s ease;
-}
-
-.cuenta-ahorro-select:focus {
-  outline: none;
-  border-color: #1a237e;
-}
-
-/* Botón de mostrar resultados: llamado a la acción principal */
-.cuenta-ahorro-button {
-  background-color: #1a237e;
-  color: #ffffff;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold;
+  appearance: none;
+  background: #f0f0f0;
   border: none;
-  border-radius: 4px;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  border-radius: 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  min-width: 180px;
+}
+
+.cuenta-ahorro-button {
+  background: #ffffff;
+  color: #003355;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
 }
 
 .cuenta-ahorro-button:hover {
-  background-color: #303f9f;
+  background: #f5f5f5;
+  transform: translateY(-2px);
 }
 
-/* Mensajes de carga y error: centrados y con estilos diferenciados */
-.cuenta-ahorro-loading,
-.cuenta-ahorro-error {
-  text-align: center;
-  font-size: 16px;
-  margin-top: 20px;
+/* Wrapper para tabla + botón Ver más */
+.cuenta-ahorro-table-wrapper {
+  position: relative;
+  width: 90%;
+  max-width: 700px;
+  margin: 0 auto 2rem;
 }
 
-.cuenta-ahorro-error {
-  color: #d32f2f;
-}
-
-/* Tabla de resultados: disposición limpia con encabezado en azul oscuro y filas intercaladas */
-.cuenta-ahorro-table {
+/* Tabla centrada dentro del wrapper */
+.cuenta-ahorro-table-wrapper .cuenta-ahorro-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+}
+
+.cuenta-ahorro-table th,
+.cuenta-ahorro-table td {
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid #e0e0e0;
 }
 
 .cuenta-ahorro-thead {
-  background-color: #1a237e;
-  color: #ffffff;
+  background: #e0f7ff;
 }
 
 .cuenta-ahorro-th {
-  padding: 10px;
-  text-align: center;
-  font-size: 16px;
-}
-
-.cuenta-ahorro-tbody {
-  background-color: #ffffff;
+  color: #003355;
+  font-size: 1.1rem;
 }
 
 .cuenta-ahorro-row:nth-child(even) {
-  background-color: #f9f9f9;
+  background: #fafafa;
 }
 
 .cuenta-ahorro-cell {
-  padding: 10px;
-  text-align: center;
-  border-bottom: 1px solid #eee;
-  font-size: 15px;
-  color: #333;
+  color: #333333;
+  font-size: 1rem;
 }
 
-/* Footer: barra inferior con fondo azul oscuro y texto en blanco, para cerrar visualmente el componente */
-.trm-footer {
-  text-align: center;
-  margin-top: 40px;
-  background-color: #1a237e;
-  color: #ffffff;
-  padding: 10px 0;
-  border-radius: 0 0 8px 8px;
-  font-size: 14px;
+/* Botón “Ver más / Ver menos” en esquina inferior derecha */
+.cuenta-ahorro-table-wrapper .cuenta-ahorro-button {
+  position: absolute;
+  bottom: -2.5rem;   /* ajusta la separación vertical */
+  right: 0;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
 }
+

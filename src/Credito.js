@@ -146,7 +146,7 @@ const Credito = () => {
       </div>
   
       <div className="credit-header">
-        <h2 className="credit-title">créditos</h2>
+        <h2 className="credit-title">Créditos</h2>
         {fechaCorte && (
           <p className="credit-date">
             Fecha de corte: {formatearFecha(fechaCorte)}
@@ -225,7 +225,7 @@ const Credito = () => {
             </label>
           </div>
         )}
-      </div>{/* .controls-wrapper */}
+      </div>
   
       <button className="credit-button" onClick={handleShowResults}>
         Mostrar
