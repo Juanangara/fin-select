@@ -3,8 +3,8 @@ import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
 import { useNavigate } from "react-router-dom";
-import "./EstilosCss/Login.css"; // Importa la hoja de estilos
-import finSelectLogo from "./fin-select.png"; // Asegúrate de que la ruta sea correcta
+import "./EstilosCss/Login.css";
+import finSelectLogo from "./fin-select.png";
 
 function Login() {
   const navigate = useNavigate();
@@ -49,6 +49,7 @@ function Login() {
           </button>
         </form>
 
+        {/* Volver */}
         <button
           type="button"
           className="back-button"
@@ -56,6 +57,17 @@ function Login() {
         >
           Volver
         </button>
+
+        {/* Nueva línea de Olvidaste tu contraseña */}
+        <p className="signup-text">
+          ¿Olvidaste tu contraseña?{" "}
+          <span
+            className="signup-link"
+            onClick={() => navigate("/recuperar-Contraseña")}
+          >
+            Recuperar
+          </span>
+        </p>
       </div>
     </div>
   );

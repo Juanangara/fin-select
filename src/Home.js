@@ -13,12 +13,12 @@ function Home() {
   };
 
   const handleCDT = () => {
-    navigate("/Tasa CDT");
+    navigate("/Tasa-cdt");
   };
 
   // Nueva función para Cuenta de ahorros
   const handleCuentaAhorros = () => {
-    navigate("/CuentaAhorros");
+    navigate("/Cuenta-ahorros");
   };
 
   const handleLogout = async () => {

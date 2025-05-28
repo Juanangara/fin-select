@@ -1,4 +1,3 @@
-// App.js
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AuthOptions from "./AuthOptions";
 import Login from "./Login";
@@ -7,18 +6,21 @@ import Home from "./Home";
 import Credito from "./Credito";
 import TasaCDT from "./TasaCDT";
 import Historico from "./Historico";
-import CuentaAhorros from "./CuentaAhorros"; // Importa la nueva página
-import ProtectedRoute from "./ProtectedRoute"; // Ya existente
+import CuentaAhorros from "./CuentaAhorros";
+import RecuperarContrasena from "./RecuperarContrasena";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   return (
     <Router>
       <Routes>
+        {/* Páginas de autenticación pública */}
         <Route path="/" element={<AuthOptions />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/recuperar-contraseña" element={<RecuperarContrasena />}/>
 
-        {/* Rutas protegidas */}
+        {/* Rutas protegidas: requiere autenticación */}
         <Route
           path="/home"
           element={
@@ -36,7 +38,7 @@ function App() {
           }
         />
         <Route
-          path="/Tasa CDT"
+          path="/tasa-cdt"
           element={
             <ProtectedRoute>
               <TasaCDT />
@@ -44,7 +46,7 @@ function App() {
           }
         />
         <Route
-          path="/Historico"
+          path="/historico"
           element={
             <ProtectedRoute>
               <Historico />
@@ -52,7 +54,7 @@ function App() {
           }
         />
         <Route
-          path="/CuentaAhorros"
+          path="/cuenta-ahorros"
           element={
             <ProtectedRoute>
               <CuentaAhorros />

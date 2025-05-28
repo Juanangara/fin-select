@@ -57,7 +57,7 @@
   border-radius: 999px;
   background: #eee;
   font-size: 1rem;
-  min-width: 120px; /* reduced from 150px */
+  min-width: 120px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
@@ -68,14 +68,13 @@
   max-width: none;
 }
 
-/* First two selects side by side: Tipo (3rd child), Producto (4th child) */
 .credit-container > .credit-controls:nth-child(3),
 .credit-container > .credit-controls:nth-child(4) {
   width: calc(50% - 20px);
   justify-content: flex-start;
 }
 
-/* Third select full-width, centered: Plazo (5th child) */
+/* Third select full-width, centered */
 .credit-container > .credit-controls:nth-child(5) {
   display: flex;
   width: 100%;
@@ -100,7 +99,7 @@
   font-size: 1rem;
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  transition: background 0.3s;
+  transition: background 0.3s ease-in-out;
   margin: 15px 0;
   align-self: center;
 }
@@ -113,12 +112,10 @@
   width: 90%;
   max-width: 600px;
   border-collapse: collapse;
-  /* centramos con márgenes automáticos izquierdo y derecho */
   margin: 20px auto 0;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   background: #fff;
 }
-
 .credit-table th,
 .credit-table td {
   padding: 12px 15px;
@@ -127,7 +124,7 @@
 .credit-table-head {
   background: #e0f7ff;
 }
-.credit-table-th {  
+.credit-table-th {
   font-size: 1.1rem;
   color: #003355;
   border-bottom: 2px solid #003355;
@@ -140,3 +137,57 @@
   color: #333;
 }
 
+/* Responsividad para componente Credit */
+@media (max-width: 768px) {
+  .credit-header {
+    height: auto;
+    padding: 10px 0;
+  }
+  .credit-title {
+    font-size: 1.1rem;
+  }
+  .credit-select {
+    min-width: 100px;
+    padding: 8px 12px;
+  }
+  .credit-container > .credit-controls:nth-child(3),
+  .credit-container > .credit-controls:nth-child(4) {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .credit-container {
+    padding: 10px;
+  }
+  .logo-header .logo {
+    max-width: 200px;
+  }
+  .credit-header {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  .credit-title {
+    font-size: 1rem;
+  }
+  .credit-date {
+    font-size: 0.75rem;
+  }
+  .credit-controls {
+    width: 100%;
+    flex-direction: column;
+    gap: 6px;
+    margin: 5px 0;
+  }
+  .credit-select {
+    width: 100%;
+    min-width: auto;
+  }
+  .credit-button {
+    width: 100%;
+  }
+  .credit-table {
+    width: 100%;
+    font-size: 0.9rem;
+  }
+}

@@ -21,23 +21,22 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   text-align: center;
   box-sizing: border-box;
-  position: relative; /* preparado para posicionamientos absolutos si quisieras */
+  position: relative;
 }
 
 /* Logo centrado, caja fija y siempre escalado sin invadir el botón */
 .auth-content .logo {
-  width: 200px;               /* ancho de la caja de referencia */
+  width: 200px;
   height: auto;
-  margin: 0 auto 6%;          /* mantiene 6% de separación con el siguiente elemento */
+  margin: 0 auto 6%;
   display: block;
-  transform-origin: bottom center;  /* el logo “crecerá” hacia arriba */
-  transform: scale(1.5);      /* escala un 50% de forma permanente */
-  transition: opacity 0.2s;
-  /* pointer-events: none;  opcional si sigues teniendo problemas de clic */
+  transform-origin: bottom center;
+  transform: scale(1.5);
+  transition: opacity 0.2s ease-in-out;
 }
 
 .auth-content .logo:hover {
-  opacity: 0.9;               /* sólo cambia opacidad al pasar */
+  opacity: 0.9;
 }
 
 /* Botón principal */
@@ -52,7 +51,7 @@
   border-radius: 999px;
   cursor: pointer;
   margin-bottom: 5%;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s ease-in-out;
   box-sizing: border-box;
 }
 
@@ -74,4 +73,29 @@
   cursor: pointer;
 }
 
+/* Responsividad manteniendo estilos base */
+@media (max-width: 768px) {
+  .auth-content {
+    padding: 10% 5%;
+  }
+  .auth-content .logo {
+    /* Reducir escala manteniendo proporción */
+    transform: scale(1.3);
+    width: 180px;
+    margin-bottom: 5%;
+  }
+}
 
+@media (max-width: 480px) {
+  .auth-content {
+    padding: 12% 4%;
+  }
+  .auth-content .logo {
+    transform: scale(1.1);
+    width: 150px;
+    margin-bottom: 4%;
+  }
+  .auth-content .login-button {
+    padding: 3.5% 0;
+  }
+}

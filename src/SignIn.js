@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth, dbRT } from "./firebase";
 import { ref, set } from "firebase/database";
 import { useNavigate } from "react-router-dom";
-import "./EstilosCss/SignIn.css"; // Importa tus estilos
+import "./EstilosCss/SignIn.css";
 
 // Componente Modal para Términos y Condiciones
 function TermsModal({ onAccept, onCancel }) {
@@ -36,61 +36,61 @@ function SignIn() {
     email: "",
     password: ""
   });
-  // Estado para el código de país, por defecto "+57"
   const [countryCode, setCountryCode] = useState("+57");
   const [error, setError] = useState("");
   const [showTerms, setShowTerms] = useState(false);
 
-  // Array de códigos de país
   const countryCodes = [
-    "+57",
-    "+1",
-    "+44",
-    "+52",
-    "+34",
-    "+33",
-    "+49",
-    "+61",
-    "+81",
-    "+86"
+    "+57", "+1", "+44", "+52", "+34",
+    "+33", "+49", "+61", "+81", "+86"
   ];
 
-  // Actualiza los datos del formulario
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError(""); // limpiar error al escribir
   };
 
-  const handleRegister = async () => {
+  // Regex simple para validar formato de email
+  const emailRegex = /^\S+@\S+\.\S+$/;
+
+  // Se dispara al presionar el botón "Registrarse"
+  const handleRegisterClick = () => {
     const { nombre, apellido, telefono, email, password } = formData;
 
-    // Validación de campos
+    // 1. Validar campos no vacíos
     if (!nombre || !apellido || !telefono || !email || !password) {
       setError("Por favor, completa todos los campos.");
       return;
     }
 
-    // Validar formato de correo
-    const emailRegex = /\S+@\S+\.\S+/;
-    if (!emailRegex.test(email)) {
+    // 2. Validar formato de correo
+    if (!emailRegex.test(email.trim())) {
       setError("El correo no es válido.");
       return;
     }
 
-    try {
-      // Registrar al usuario con email y contraseña
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    // Si todo OK, mostrar modal
+    setShowTerms(true);
+  };
 
-      // Guarda datos adicionales en la Realtime Database junto con la aceptación de términos.
-      // Combinamos el countryCode y el teléfono ingresado.
-      await set(ref(dbRT, "users/" + userCredential.user.uid), {
+  const handleTermsAccept = async () => {
+    setShowTerms(false);
+    const { nombre, apellido, telefono, email, password } = formData;
+    try {
+      // Crear usuario en Firebase Auth
+      const userCredential = await createUserWithEmailAndPassword(auth, email.trim(), password);
+
+      // Guardar datos en Realtime DB
+      await set(ref(dbRT, `users/${userCredential.user.uid}`), {
         nombre,
         apellido,
-        telefono: countryCode + formData.telefono,
-        email,
+        telefono: countryCode + telefono,
+        email: email.trim(),
         provider: "password",
         termsAccepted: true
       });
 
+      // Cerrar sesión y redirigir a login
       await signOut(auth);
       navigate("/login");
     } catch (err) {
@@ -102,21 +102,6 @@ function SignIn() {
     }
   };
 
-  // Al presionar "Registrarse" se muestra el modal de términos
-  const handleRegisterClick = () => {
-    const { nombre, apellido, telefono, email, password } = formData;
-    if (!nombre || !apellido || !telefono || !email || !password) {
-      setError("Por favor, completa todos los campos.");
-      return;
-    }
-    setShowTerms(true);
-  };
-
-  const handleTermsAccept = () => {
-    setShowTerms(false);
-    handleRegister();
-  };
-
   const handleTermsCancel = () => {
     setShowTerms(false);
     alert("Debe aceptar los términos y condiciones para registrarse.");
@@ -126,6 +111,7 @@ function SignIn() {
     <div className="signin-container">
       <div className="signin-content">
         <h2>Registro</h2>
+
         <input
           type="text"
           placeholder="Nombre"
@@ -142,7 +128,7 @@ function SignIn() {
           onChange={handleChange}
           required
         />
-        {/* Contenedor para código de país y teléfono */}
+
         <div className="telefono-container">
           <select
             className="pais-codigo-select"
@@ -150,9 +136,7 @@ function SignIn() {
             onChange={(e) => setCountryCode(e.target.value)}
           >
             {countryCodes.map((code) => (
-              <option key={code} value={code}>
-                {code}
-              </option>
+              <option key={code} value={code}>{code}</option>
             ))}
           </select>
           <input
@@ -164,6 +148,7 @@ function SignIn() {
             required
           />
         </div>
+
         <input
           type="email"
           placeholder="Correo"
@@ -180,7 +165,9 @@ function SignIn() {
           onChange={handleChange}
           required
         />
+
         {error && <p className="error-message">{error}</p>}
+
         <button
           type="button"
           className="register-button"
@@ -188,12 +175,19 @@ function SignIn() {
         >
           Registrarse
         </button>
-        <button className="back-button" onClick={() => navigate("/")}>
+        <button
+          className="back-button"
+          onClick={() => navigate("/")}
+        >
           Volver
         </button>
       </div>
+
       {showTerms && (
-        <TermsModal onAccept={handleTermsAccept} onCancel={handleTermsCancel} />
+        <TermsModal
+          onAccept={handleTermsAccept}
+          onCancel={handleTermsCancel}
+        />
       )}
     </div>
   );

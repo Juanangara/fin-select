@@ -1,6 +1,6 @@
 /* SignIn.css */
 
-/* 1. Contenedor full‑screen con fondo degradado suave */
+/* 1. Contenedor full-screen con fondo degradado suave */
 .signin-container {
   width: 100vw;
   min-height: 100vh;
@@ -21,24 +21,18 @@
   width: 100%;
   max-width: 420px;
   text-align: center;
-  font-family: system-ui, sans-serif;
   box-sizing: border-box;
 }
 
-/* 3. Título “Registro” en texto plano */
+/* 3. Título “Registro” */
 .signin-content h2 {
   font-size: 1.75rem;
   font-weight: 600;
   color: #003355;
   margin-bottom: 2rem;
-  /* Quitamos fondo, bordes y sombras */
-  background: none;
-  padding: 0;
-  border-radius: 0;
-  box-shadow: none;
 }
 
-/* 4. Campos de entrada transformados en “píldoras” */
+/* 4. Inputs y select “píldora” */
 .signin-content input[type="text"],
 .signin-content input[type="email"],
 .signin-content input[type="password"],
@@ -55,22 +49,20 @@
   outline: none;
   transition: box-shadow 0.2s, background 0.2s;
 }
-
 .signin-content input:focus,
 .signin-content select:focus {
   background: #e0f7ff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* 5. Contenedor de teléfono personalizado y alineación */
+/* 5. Contenedor de teléfono: alineación perfecta */
 .telefono-container {
   display: flex;
-  align-items: center;  /* centra verticalmente */
+  align-items: center;
   gap: 1rem;
   margin-bottom: 1.5rem;
   width: 100%;
 }
-
 .pais-codigo-select,
 .telefono-container input[type="tel"] {
   box-sizing: border-box;
@@ -80,19 +72,14 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   outline: none;
   transition: background 0.2s, box-shadow 0.2s;
-
-  /* misma altura y curvatura */
   min-height: 3.5rem;
   padding: 0 1rem;
-  line-height: 1;
   border-radius: 2rem;
 }
-
-/* Anchos relativos */
+/* Ajuste de anchos */
 .pais-codigo-select {
-  flex: 0 0 25%;   /* un poco más ancho para que no quede tan estrecho */
+  flex: 0 0 25%;
 }
-
 .telefono-container input[type="tel"] {
   flex: 1;
 }
@@ -107,7 +94,7 @@
   box-sizing: border-box;
 }
 
-/* 7. Botones estilo “píldora” */
+/* 7. Botones “píldora” */
 .register-button,
 .back-button {
   display: block;
@@ -122,29 +109,25 @@
   transition: background 0.2s, transform 0.2s;
   margin-bottom: 1rem;
 }
-
 .register-button {
   background: #003355;
   color: #fff;
 }
-
 .register-button:hover {
   background: #00253a;
   transform: translateY(-2px);
 }
-
 .back-button {
   background: #f2fbff;
   color: #003355;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
-
 .back-button:hover {
   background: #e0f7ff;
   transform: translateY(-2px);
 }
 
-/* 8. Modal adaptado */
+/* 8. Modal de términos y condiciones */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -157,7 +140,6 @@
   align-items: center;
   z-index: 1000;
 }
-
 .modal-content {
   background: #ffffff;
   padding: 2rem;
@@ -168,23 +150,19 @@
   text-align: center;
   box-sizing: border-box;
 }
-
 .modal-content h3 {
   font-size: 1.25rem;
   color: #003355;
   margin-bottom: 1rem;
 }
-
 .modal-content p {
   font-size: 1rem;
   margin-bottom: 1.5rem;
 }
-
 .modal-actions {
   display: flex;
   gap: 1rem;
 }
-
 .modal-accept,
 .modal-cancel {
   flex: 1;
@@ -196,23 +174,46 @@
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;
 }
-
 .modal-accept {
   background: #003355;
   color: #fff;
 }
-
 .modal-accept:hover {
   background: #00253a;
   transform: translateY(-2px);
 }
-
 .modal-cancel {
   background: #d32f2f;
   color: #fff;
 }
-
 .modal-cancel:hover {
   background: #b71c1c;
   transform: translateY(-2px);
+}
+
+/* 9. Responsividad */
+@media (max-width: 768px) {
+  .signin-content {
+    padding: 2rem 1.5rem;
+  }
+  .telefono-container {
+    gap: 0.75rem;
+  }
+  .pais-codigo-select {
+    flex: 0 0 30%;
+  }
+}
+@media (max-width: 480px) {
+  .signin-content {
+    padding: 1.5rem 1rem;
+  }
+  .telefono-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  .pais-codigo-select {
+    flex: none;
+    width: 100%;
+  }
 }

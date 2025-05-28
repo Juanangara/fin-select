@@ -1,0 +1,96 @@
+/* RecupeContrasena.css - Estilo empresarial y sutil */
+
+.recuperar-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+/* 2. Título elegante */
+.recuperar-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* 3. Input minimalista */
+.recuperar-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: #2c3e50;
+  border: 1px solid #ccd1d9;
+  border-radius: 0.5rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+.recuperar-input:focus {
+  border-color: #1f618d;
+  box-shadow: 0 0 0 3px rgba(31, 97, 141, 0.1);
+  outline: none;
+}
+
+/* 4. Botón principal sobrio */
+.recuperar-button {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #1f618d;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  margin-bottom: 1rem;
+}
+.recuperar-button:hover {
+  background-color: #154360;
+  transform: translateY(-1px);
+}
+
+/* 5. Mensaje de feedback discreto */
+.recuperar-feedback {
+  font-size: 0.9rem;
+  color: #c0392b;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* 6. Enlace de volver con estilo simple */
+.recuperar-volver {
+  font-size: 0.9rem;
+  color: #1f618d;
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+  text-align: center;
+  transition: color 0.2s;
+}
+.recuperar-volver:hover {
+  color: #154360;
+}
+
+/* 7. Responsive */
+@media (max-width: 480px) {
+  .recuperar-container {
+    margin: 2rem 1rem;
+    padding: 1.5rem;
+  }
+  .recuperar-title {
+    font-size: 1.25rem;
+  }
+  .recuperar-input,
+  .recuperar-button {
+    font-size: 0.9rem;
+    padding: 0.65rem 0.9rem;
+  }
+}
