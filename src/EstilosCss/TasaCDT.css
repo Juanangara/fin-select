@@ -1,138 +1,324 @@
-/* TasaCdt.css */
+/* TasaCDT.css */
 
-/* 1. Contenedor full‑screen con degradado vertical */
+/* Contenedor full-screen con degradado vertical acabando en blanco */
 .tasa-cdt-container {
-  width: 100vw;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;     /* arranca desde arriba */
-  align-items: center;
-  padding: 0 1rem 2rem;            /* quita padding‑top extra */
-  background: linear-gradient(180deg, #71cefd 0%, #ebf8ff 50%, #ffffff 100%);
-  box-sizing: border-box;
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alineado al inicio como TasaCDT */
+    align-items: center;
+    padding: 0 1rem 2rem; /* Padding superior cero como TasaCDT */
+    background: linear-gradient(180deg, #71cefd 0%, #ebf8ff 50%, #ffffff 100%);
+    box-sizing: border-box;
 }
 
-/* 2. Logo siempre arriba, centrado */
+/* Header con logo */
 .logo-header {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin: 1.5rem 0 0;              /* espacio superior para separar del borde */
-}
-.logo-header .logoTasaCDT {
-  width: 260px;
-  max-width: 100%;
-  transform: scale(1.2);
-  margin-bottom: 1.5rem;           /* espacio abajo del logo */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* Ajustes para bajar el logo y alinear con TasaCDT */
+    margin-top: -3%; /* Consistente con TasaCDT */
+    margin-bottom: 2%; /* Consistente con TasaCDT */
 }
 
-/* 3. Título justo debajo del logo */
-.tasa-cdt-title {
-  background: #ffffff;
-  color: #003355;
-  font-size: 1.75rem;
-  font-weight: 600;
-  padding: 0.75rem 2rem;
-  border-radius: 2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  margin: 1rem auto;               /* espacio arriba y abajo */
-  text-align: center;
-  max-width: 80%;
-  width: 100%;
+.logo-header .logoTasaCDT { /* <-- CAMBIO AQUÍ: Nombre de clase del logo */
+    width: 260px; /* Consistente con TasaCDT */
+    max-width: 100%;
+    height: auto; /* Asegura la proporción */
+    transform: none; /* Elimina cualquier transformación si la tenías antes */
 }
 
-/* 4. Controles debajo del título */
-.tasa-cdt-controls {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin: 1.5rem auto 3rem;        /* 1.5rem arriba (del título), 3rem abajo */
-  flex-wrap: wrap;
-  justify-content: center;
+/* Título principal como píldora */
+.tasa-cdt-title { /* <-- CAMBIO AQUÍ: Nombre de clase */
+    background: #ffffff;
+    color: #003355;
+    font-size: 1.3rem; /* Consistente con TasaCDT */
+    font-weight: 600;
+    padding: 6px 0; /* Consistente con TasaCDT */
+    border-radius: 999px; /* Más redondeado, consistente con TasaCDT */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Sombra consistente con TasaCDT */
+    margin-bottom: 30px; /* Consistente con TasaCDT */
+    margin-top: 1rem; /* Consistente con TasaCDT */
+    text-align: center;
+    max-width: 900px; /* Consistente con TasaCDT */
+    width: 80%; /* Consistente con TasaCDT */
+    height: 50px; /* Consistente con TasaCDT */
+    display: flex; /* Para centrar texto verticalmente */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.tasa-cdt-label {
-  font-size: 1rem;
-  color: #003355;
+/* Controles: select + botón Mostrar */
+.tasa-cdt-controls { /* <-- CAMBIO AQUÍ: Nombre de clase */
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; /* Consistente con TasaCDT */
+    margin: 2rem auto 3rem; /* Consistente con TasaCDT */
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 90%; /* Consistente con TasaCDT */
+    max-width: 600px; /* Consistente con TasaCDT */
+    box-sizing: border-box;
+    padding: 0 10px; /* Consistente con TasaCDT */
 }
 
-.tasa-cdt-select {
-  appearance: none;
-  background: #f0f0f0;
-  border: none;
-  padding: 0.75rem 1.25rem;
-  font-size: 1rem;
-  border-radius: 2rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-  min-width: 180px;
+.tasa-cdt-label { /* <-- CAMBIO AQUÍ: Nombre de clase */
+    font-size: 1.1rem; /* Consistente con TasaCDT */
+    color: #336b87; /* Consistente con TasaCDT */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    text-align: center;
 }
 
-.tasa-cdt-button {
-  background: #ffffff;
-  color: #003355;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 2rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+.tasa-cdt-select { /* <-- CAMBIO AQUÍ: Nombre de clase */
+    appearance: none;
+    background: #eee; /* Consistente con TasaCDT */
+    border: none;
+    padding: 10px 15px; /* Consistente con TasaCDT */
+    font-size: 1rem;
+    border-radius: 999px; /* Consistente con TasaCDT */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Consistente con TasaCDT */
+    cursor: pointer;
+    min-width: 120px; /* Consistente con TasaCDT */
+    /* Añadir flecha de select para consistencia con TasaCDT */
+    background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22%23666%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem;
 }
 
-.tasa-cdt-button:hover {
-  background: #f5f5f5;
-  transform: translateY(-2px);
+.tasa-cdt-button { /* <-- CAMBIO AQUÍ: Nombre de clase */
+    background: #003355; /* Consistente con TasaCDT */
+    color: #fff; /* Consistente con TasaCDT */
+    border: none;
+    padding: 12px 30px; /* Consistente con TasaCDT */
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 999px; /* Consistente con TasaCDT */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Consistente con TasaCDT */
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0s; /* Consistente con TasaCDT */
 }
 
-/* 5. Resultados (tabla y botón “Ver más/menos”) */
-.tasa-cdt-table-wrapper {
-  position: relative;
-  width: 90%;
-  max-width: 700px;
-  margin: 0 auto 1.5rem;
+.tasa-cdt-button:hover { /* <-- CAMBIO AQUÍ: Nombre de clase */
+    background: #005580; /* Consistente con TasaCDT */
+    transform: none; /* Consistente con TasaCDT */
 }
 
-.tasa-cdt-table {
-  width: 100%;
-  border-collapse: collapse;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  background: #ffffff;
+/* Wrapper para tabla */
+.tasa-cdt-table-wrapper { /* <-- CAMBIO AQUÍ: Nombre de clase */
+    width: 90%; /* Consistente con TasaCDT */
+    max-width: 700px; /* Consistente con TasaCDT */
+    margin: 0 auto; /* Eliminar margin-bottom ya que el botón está fuera */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Consistente con TasaCDT */
+    background: #ffffff; /* Consistente con TasaCDT */
+    position: static; /* Ya no es necesario que sea relativo */
 }
 
-.tasa-cdt-table th,
-.tasa-cdt-table td {
-  padding: 1rem;
-  text-align: center;
-  border: 1px solid #e0e0e0;
+/* Tabla centrada dentro del wrapper */
+.tasa-cdt-table-wrapper .tasa-cdt-table { /* <-- CAMBIO AQUÍ: Nombre de clase */
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.tasa-cdt-thead {
-  background: #e0f7ff;
+.tasa-cdt-table th, /* <-- CAMBIO AQUÍ: Nombre de clase */
+.tasa-cdt-table td { /* <-- CAMBIO AQUÍ: Nombre de clase */
+    padding: 12px 15px; /* Consistente con TasaCDT */
+    text-align: center;
+    border: none; /* Consistente con TasaCDT */
 }
 
-.tasa-cdt-th {
-  color: #003355;
-  font-size: 1.1rem;
+.tasa-cdt-thead { /* <-- CAMBIO AQUÍ: Nombre de clase */
+    background: #e0f7ff; /* Consistente con TasaCDT */
 }
 
-.tasa-cdt-row:nth-child(even) {
-  background: #fafafa;
+.tasa-cdt-th { /* <-- CAMBIO AQUÍ: Nombre de clase */
+    color: #003355; /* Consistente con TasaCDT */
+    font-size: 1.1rem; /* Consistente con TasaCDT */
+    border-bottom: 2px solid #003355; /* Consistente con TasaCDT */
 }
 
-.tasa-cdt-cell {
-  color: #333333;
-  font-size: 1rem;
+.tasa-cdt-row:nth-child(even) { /* <-- CAMBIO AQUÍ: Nombre de clase */
+    background: #f9f9f9; /* Consistente con TasaCDT */
 }
 
-.tasa-cdt-showmore {
-  position: absolute;
-  bottom: -2.5rem;
-  right: 0;
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
-  margin: 0;
+.tasa-cdt-cell { /* <-- CAMBIO AQUÍ: Nombre de clase */
+    color: #333; /* Consistente con TasaCDT */
+    font-size: 1 rem; /* Consistente con TasaCDT */
 }
 
+/* Nuevo contenedor para el botón “Ver más / Ver menos” (fuera del table-wrapper) */
+.tasa-cdt-toggle-link-container { /* <-- CAMBIO AQUÍ: Nombre de clase */
+    width: 90%; /* Misma anchura que la tabla para alineación */
+    max-width: 700px; /* Misma anchura máxima que la tabla */
+    margin: 5px auto 1.5rem; /* Margen superior para separarlo de la tabla (subirlo un poco) */
+    text-align: right; /* Esto lo alinea a la derecha */
+    box-sizing: border-box;
+    padding-right: 5px; /* VALOR BASE FIJADO A 5PX SEGÚN TU PREFERENCIA */
+    position: relative;
+    z-index: 10;
+}
+
+/* Estilos para el botón "Ver más / Ver menos" (dentro de su nuevo contenedor) */
+.tasa-cdt-showmore { /* <-- CAMBIO AQUÍ: Nombre de clase */
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 1rem;
+    color: #0066cc;
+    text-decoration: underline;
+    cursor: pointer;
+    box-shadow: none;
+    transition: color 0.2s, text-decoration 0.2s;
+    margin: 0;
+    position: static;
+}
+
+.tasa-cdt-showmore:hover { /* <-- CAMBIO AQUÍ: Nombre de clase */
+    text-decoration: none;
+    background-color: none;
+    
+}
+
+
+/* ------------------------------------------- */
+/* RESPONSIVIDAD */
+/* ------------------------------------------- */
+
+/* Media Query para Tablets (ancho máximo 768px) */
+@media (max-width: 768px) {
+    .tasa-cdt-container { /* <-- CAMBIO AQUÍ: Nombre de clase */
+        padding: 0 0.5rem 1.5rem;
+    }
+
+    .logo-header {
+        margin-top: -1%;
+        margin-bottom: 2%;
+    }
+    .logo-header .logoTasaCDT { /* <-- CAMBIO AQUÍ: Nombre de clase del logo */
+        width: 200px;
+    }
+
+    .tasa-cdt-title { /* <-- CAMBIO AQUÍ: Nombre de clase */
+        width: 90%;
+        font-size: 1.1rem; /* Consistente con TasaCDT en tablets */
+        height: auto;
+        padding: 10px 0;
+        margin-bottom: 25px;
+    }
+
+    .tasa-cdt-controls { /* <-- CAMBIO AQUÍ: Nombre de clase */
+        gap: 1rem;
+        margin: 1.5rem auto 2.5rem;
+        width: 95%;
+        padding: 0;
+    }
+
+    .tasa-cdt-label { /* <-- CAMBIO AQUÍ: Nombre de clase */
+        font-size: 1rem;
+    }
+
+    .tasa-cdt-select { /* <-- CAMBIO AQUÍ: Nombre de clase */
+        min-width: 100px;
+        padding: 8px 12px;
+    }
+
+    .tasa-cdt-button { /* <-- CAMBIO AQUÍ: Nombre de clase */
+        padding: 10px 25px;
+        font-size: 0.95rem;
+    }
+
+    .tasa-cdt-table-wrapper { /* <-- CAMBIO AQUÍ: Nombre de clase */
+        width: 95%;
+    }
+
+    .tasa-cdt-table th, /* <-- CAMBIO AQUÍ: Nombre de clase */
+    .tasa-cdt-table td { /* <-- CAMBIO AQUÍ: Nombre de clase */
+        padding: 10px 12px; /* Consistente con TasaCDT en tablets */
+        font-size: 0.95rem;
+    }
+
+    .tasa-cdt-th { /* <-- CAMBIO AQUÍ: Nombre de clase */
+        font-size: 1rem;
+    }
+
+    .tasa-cdt-toggle-link-container { /* <-- CAMBIO AQUÍ: Nombre de clase */
+        width: 95%;
+        margin-top: 5px;
+        padding-right: 5px; /* AJUSTADO: Mantenemos 5px en tablets */
+    }
+}
+
+/* Media Query para Móviles (ancho máximo 480px) */
+@media (max-width: 480px) {
+    .tasa-cdt-container { /* <-- CAMBIO AQUÍ: Nombre de clase */
+        padding: 0 0.5rem 1rem;
+    }
+
+    .logo-header {
+        margin-top: 0%;
+        margin-bottom: 1%;
+    }
+    .logo-header .logoTasaCDT { /* <-- CAMBIO AQUÍ: Nombre de clase del logo */
+        width: 180px;
+    }
+
+    .tasa-cdt-title { /* <-- CAMBIO AQUÍ: Nombre de clase */
+        width: 100%;
+        font-size: 1rem; /* Consistente con TasaCDT en móviles */
+        padding: 8px 0;
+        margin-bottom: 20px;
+    }
+
+    .tasa-cdt-controls { /* <-- CAMBIO AQUÍ: Nombre de clase */
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+        margin: 1rem auto 2rem;
+        width: 100%;
+    }
+
+    .tasa-cdt-label { /* <-- CAMBIO AQUÍ: Nombre de clase */
+        width: 100%;
+        text-align: center;
+    }
+
+    .tasa-cdt-select { /* <-- CAMBIO AQUÍ: Nombre de clase */
+        width: 90%;
+        min-width: auto;
+        padding: 8px 10px;
+    }
+
+    .tasa-cdt-button { /* <-- CAMBIO AQUÍ: Nombre de clase */
+        width: 90%;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        margin: 10px auto;
+    }
+
+    .tasa-cdt-table-wrapper { /* <-- CAMBIO AQUÍ: Nombre de clase */
+        width: 100%;
+    }
+
+    .tasa-cdt-table th, /* <-- CAMBIO AQUÍ: Nombre de clase */
+    .tasa-cdt-table td { /* <-- CAMBIO AQUÍ: Nombre de clase */
+        padding: 8px 10px; /* Consistente con TasaCDT en móviles */
+        font-size: 0.85rem;
+    }
+
+    .tasa-cdt-th { /* <-- CAMBIO AQUÍ: Nombre de clase */
+        font-size: 0.9rem;
+    }
+
+    .tasa-cdt-toggle-link-container { /* <-- CAMBIO AQUÍ: Nombre de clase */
+        width: 100%; /* El contenedor ocupa todo el ancho disponible */
+        margin-top: 5px;
+        padding-right: 5px; /* AJUSTADO: Mantenemos 5px en móviles */
+    }
+}

@@ -2,139 +2,330 @@
 
 /* Contenedor full-screen con degradado vertical acabando en blanco */
 .cuenta-ahorro-container {
-  width: 100vw;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: linear-gradient(180deg, #71cefd 0%, #ebf8ff 50%, #ffffff 100%);
-  padding: 2rem 1rem;
-  box-sizing: border-box;
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alineado al inicio como TasaCDT */
+    align-items: center;
+    padding: 0 1rem 2rem; /* Padding superior cero como TasaCDT */
+    background: linear-gradient(180deg, #71cefd 0%, #ebf8ff 50%, #ffffff 100%);
+    box-sizing: border-box;
 }
 
 /* Header con logo */
 .logo-header {
-  margin-bottom: -5%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* Ajustes para bajar el logo y alinear con TasaCDT */
+    margin-top: -3%; /* Consistente con TasaCDT */
+    margin-bottom: 2%; /* Consistente con TasaCDT */
 }
 
 .logo-header .logocuentaAhorro {
-  width: 260px;
-  max-width: 100%;
-  margin-top: 50px;
-  display: block;
-  margin: 0 auto;
-  transform-origin: bottom center;
-  transform: scale(1.2);
+    width: 260px; /* Consistente con TasaCDT */
+    max-width: 100%;
+    height: auto; /* Asegura la proporción */
+    transform: none; /* Elimina cualquier transformación si la tenías antes */
 }
 
 /* Título principal como píldora */
 .cuenta-ahorro-title {
-  background: #ffffff;
-  color: #003355;
-  font-size: 1.75rem;
-  font-weight: 600;
-  padding: 0.75rem 2rem;
-  border-radius: 2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  margin-bottom: 2rem;
-  text-align: center;
-  max-width: 80%;
-  width: 100%;
+    background: #ffffff;
+    color: #003355;
+    font-size: 1.3rem; /* Consistente con TasaCDT */
+    font-weight: 600;
+    padding: 6px 0; /* Consistente con TasaCDT */
+    border-radius: 999px; /* Más redondeado, consistente con TasaCDT */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Sombra consistente con TasaCDT */
+    margin-bottom: 30px; /* Consistente con TasaCDT */
+    margin-top: 1rem; /* Consistente con TasaCDT */
+    text-align: center;
+    max-width: 900px; /* Consistente con TasaCDT */
+    width: 80%; /* Consistente con TasaCDT */
+    height: 50px; /* Consistente con TasaCDT */
+    display: flex; /* Para centrar texto verticalmente */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Controles: select + botón Mostrar */
 .cuenta-ahorro-controls {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; /* Consistente con TasaCDT */
+    margin: 2rem auto 3rem; /* Consistente con TasaCDT */
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 90%; /* Consistente con TasaCDT */
+    max-width: 600px; /* Consistente con TasaCDT */
+    box-sizing: border-box;
+    padding: 0 10px; /* Consistente con TasaCDT */
 }
 
 .cuenta-ahorro-label {
-  font-size: 1rem;
-  color: #003355;
+    font-size: 1.1rem; /* Consistente con TasaCDT */
+    color: #336b87; /* Consistente con TasaCDT */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    text-align: center;
 }
 
 .cuenta-ahorro-select {
-  appearance: none;
-  background: #f0f0f0;
-  border: none;
-  padding: 0.75rem 1.25rem;
-  font-size: 1rem;
-  border-radius: 2rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-  min-width: 180px;
+    appearance: none;
+    background: #eee; /* Consistente con TasaCDT */
+    border: none;
+    padding: 10px 15px; /* Consistente con TasaCDT */
+    font-size: 1rem;
+    border-radius: 999px; /* Consistente con TasaCDT */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Consistente con TasaCDT */
+    cursor: pointer;
+    min-width: 120px; /* Consistente con TasaCDT */
+    /* Añadir flecha de select para consistencia con TasaCDT */
+    background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22%23666%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem;
 }
 
 .cuenta-ahorro-button {
-  background: #ffffff;
-  color: #003355;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 2rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+    background: #003355; /* Consistente con TasaCDT */
+    color: #fff; /* Consistente con TasaCDT */
+    border: none;
+    padding: 12px 30px; /* Consistente con TasaCDT */
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 999px; /* Consistente con TasaCDT */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Consistente con TasaCDT */
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0s; /* Consistente con TasaCDT */
 }
 
 .cuenta-ahorro-button:hover {
-  background: #f5f5f5;
-  transform: translateY(-2px);
+    background: #005580; /* Consistente con TasaCDT */
+    transform: none; /* Consistente con TasaCDT */
 }
 
-/* Wrapper para tabla + botón Ver más */
+/* Wrapper para tabla */
 .cuenta-ahorro-table-wrapper {
-  position: relative;
-  width: 90%;
-  max-width: 700px;
-  margin: 0 auto 2rem;
+    width: 90%; /* Consistente con TasaCDT */
+    max-width: 700px; /* Consistente con TasaCDT */
+    margin: 0 auto; /* Eliminar margin-bottom ya que el botón está fuera */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Consistente con TasaCDT */
+    background: #ffffff; /* Consistente con TasaCDT */
+    position: static; /* Ya no es necesario que sea relativo */
 }
 
 /* Tabla centrada dentro del wrapper */
 .cuenta-ahorro-table-wrapper .cuenta-ahorro-table {
-  width: 100%;
-  border-collapse: collapse;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  background: #ffffff;
+    width: 100%;
+    border-collapse: collapse;
 }
 
 .cuenta-ahorro-table th,
 .cuenta-ahorro-table td {
-  padding: 1rem;
-  text-align: center;
-  border: 1px solid #e0e0e0;
+    padding: 12px 15px; /* Consistente con TasaCDT */
+    text-align: center;
+    border: none; /* Consistente con TasaCDT */
 }
 
 .cuenta-ahorro-thead {
-  background: #e0f7ff;
+    background: #e0f7ff; /* Consistente con TasaCDT */
 }
 
 .cuenta-ahorro-th {
-  color: #003355;
-  font-size: 1.1rem;
+    color: #003355; /* Consistente con TasaCDT */
+    font-size: 1.1rem; /* Consistente con TasaCDT */
+    border-bottom: 2px solid #003355; /* Consistente con TasaCDT */
 }
 
 .cuenta-ahorro-row:nth-child(even) {
-  background: #fafafa;
+    background: #f9f9f9; /* Consistente con TasaCDT */
 }
 
 .cuenta-ahorro-cell {
-  color: #333333;
-  font-size: 1rem;
+    color: #333; /* Consistente con TasaCDT */
+    font-size: 1 rem; /* Consistente con TasaCDT */
 }
 
-/* Botón “Ver más / Ver menos” en esquina inferior derecha */
-.cuenta-ahorro-table-wrapper .cuenta-ahorro-button {
-  position: absolute;
-  bottom: -2.5rem;   /* ajusta la separación vertical */
-  right: 0;
-  margin: 0;
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
+/* Nuevo contenedor para el botón “Ver más / Ver menos” (fuera del table-wrapper) */
+.cuenta-ahorro-toggle-link-container {
+    width: 90%; /* Misma anchura que la tabla para alineación */
+    max-width: 700px; /* Misma anchura máxima que la tabla */
+    margin: 5px auto 1.5rem; /* Margen superior para separarlo de la tabla (subirlo un poco) */
+    text-align: right; /* Esto lo alinea a la derecha */
+    box-sizing: border-box;
+    padding-right: 5px; /* VALOR BASE FIJADO A 5PX SEGÚN TU PREFERENCIA */
+    position: relative;
+    z-index: 10;
 }
 
+/* Estilos para el botón "Ver más / Ver menos" (dentro de su nuevo contenedor) */
+.cuenta-ahorro-showmore {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 1rem;
+    color: #0066cc;
+    text-decoration: underline;
+    cursor: pointer;
+    box-shadow: none;
+    transition: color 0.2s, text-decoration 0.2s;
+    margin: 0;
+    position: static;
+}
+
+.cuenta-ahorro-showmore:hover {
+    background: none;
+    text-decoration: none;
+}
+
+
+/* ------------------------------------------- */
+/* RESPONSIVIDAD */
+/* ------------------------------------------- */
+
+/* Media Query para Tablets (ancho máximo 768px) */
+@media (max-width: 768px) {
+    .cuenta-ahorro-container {
+        padding: 0 0.5rem 1.5rem;
+    }
+
+    .logo-header {
+        margin-top: -1%;
+        margin-bottom: 2%;
+    }
+    .logo-header .logocuentaAhorro {
+        width: 200px;
+    }
+
+    .cuenta-ahorro-title {
+        width: 90%;
+        font-size: 1.1rem; /* Consistente con TasaCDT en tablets */
+        height: auto;
+        padding: 10px 0;
+        margin-bottom: 25px;
+    }
+
+    .cuenta-ahorro-controls {
+        gap: 1rem;
+        margin: 1.5rem auto 2.5rem;
+        width: 95%;
+        padding: 0;
+    }
+
+    .cuenta-ahorro-label {
+        font-size: 1rem;
+    }
+
+    .cuenta-ahorro-select {
+        min-width: 100px;
+        padding: 8px 12px;
+    }
+
+    .cuenta-ahorro-button {
+        padding: 10px 25px;
+        font-size: 0.95rem;
+    }
+
+    .cuenta-ahorro-table-wrapper {
+        width: 95%;
+    }
+
+    .cuenta-ahorro-table th,
+    .cuenta-ahorro-table td {
+        padding: 10px 12px; /* Consistente con TasaCDT en tablets */
+        font-size: 0.95rem;
+    }
+
+    .cuenta-ahorro-th {
+        font-size: 1rem;
+    }
+
+    .cuenta-ahorro-toggle-link-container {
+        width: 95%;
+        margin-top: 5px;
+        /* Si quieres mantener 5px también en tablet, déjalo así. */
+        /* Si prefieres que se aleje un poco más para evitar que se pegue al borde,
+           puedes aumentar a un valor como 15px o 20px */
+        padding-right: 5px; /* AJUSTADO: Mantenemos 5px o ajusta si es necesario para el borde del contenedor */
+    }
+}
+
+/* Media Query para Móviles (ancho máximo 480px) */
+@media (max-width: 480px) {
+    .cuenta-ahorro-container {
+        padding: 0 0.5rem 1rem;
+    }
+
+    .logo-header {
+        margin-top: 0%;
+        margin-bottom: 1%;
+    }
+    .logo-header .logocuentaAhorro {
+        width: 180px;
+    }
+
+    .cuenta-ahorro-title {
+        width: 100%;
+        font-size: 1rem; /* Consistente con TasaCDT en móviles */
+        padding: 8px 0;
+        margin-bottom: 20px;
+    }
+
+    .cuenta-ahorro-controls {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+        margin: 1rem auto 2rem;
+        width: 100%;
+    }
+
+    .cuenta-ahorro-label {
+        width: 100%;
+        text-align: center;
+    }
+
+    .cuenta-ahorro-select {
+        width: 90%;
+        min-width: auto;
+        padding: 8px 10px;
+    }
+
+    .cuenta-ahorro-button {
+        width: 90%;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        margin: 10px auto;
+    }
+
+    .cuenta-ahorro-table-wrapper {
+        width: 100%;
+    }
+
+    .cuenta-ahorro-table th,
+    .cuenta-ahorro-table td {
+        padding: 8px 10px; /* Consistente con TasaCDT en móviles */
+        font-size: 0.85rem;
+    }
+
+    .cuenta-ahorro-th {
+        font-size: 0.9rem;
+    }
+
+    .cuenta-ahorro-toggle-link-container {
+        width: 100%; /* El contenedor ocupa todo el ancho disponible */
+        margin-top: 5px;
+        /* Si quieres mantener 5px también en móvil, déjalo así. */
+        /* Si prefieres que se aleje un poco más, puedes aumentar.
+           Dado que la tabla ocupa el 100% y puede no tener padding lateral,
+           un padding-right de 5px podría ser demasiado pequeño si el diseño
+           no tiene espacio a los lados. Podrías probar 10px o 15px aquí. */
+        padding-right: 5px; /* AJUSTADO: Mantenemos 5px o ajusta si es necesario para el borde del contenedor */
+    }
+}

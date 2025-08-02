@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./EstilosCss/CuentaAhorros.css";
+import "./EstilosCss/CuentaAhorros.css"; // Asegúrate de que esta ruta sea correcta
 
 // Importamos Firebase (asegúrate de ajustar la ruta)
 import { auth, dbRT } from "./firebase";
@@ -164,35 +164,42 @@ const CuentaAhorros = () => {
       </div>
 
       {showResults && (
-        <div className="cuenta-ahorro-table-wrapper">
-          <table className="cuenta-ahorro-table">
-            <thead className="cuenta-ahorro-thead">
-              <tr>
-                <th className="cuenta-ahorro-th">Ranking</th>
-                <th className="cuenta-ahorro-th">Entidad</th>
-                <th className="cuenta-ahorro-th">Tasa</th>
-              </tr>
-            </thead>
-            <tbody className="cuenta-ahorro-tbody">
-              {rankedData
-                .slice(0, showAllResults ? rankedData.length : 5)
-                .map((item, index) => (
-                  <tr key={index} className="cuenta-ahorro-row">
-                    <td className="cuenta-ahorro-cell">{index + 1}</td>
-                    <td className="cuenta-ahorro-cell">{item.entidad}</td>
-                    <td className="cuenta-ahorro-cell">{item.displayValue}</td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+        <> {/* <-- AGREGADO: Fragmento de React para devolver múltiples elementos hermanos */}
+          <div className="cuenta-ahorro-table-wrapper">
+            <table className="cuenta-ahorro-table">
+              <thead className="cuenta-ahorro-thead">
+                <tr>
+                  <th className="cuenta-ahorro-th">Ranking</th>
+                  <th className="cuenta-ahorro-th">Entidad</th>
+                  <th className="cuenta-ahorro-th">Tasa</th>
+                </tr>
+              </thead>
+              <tbody className="cuenta-ahorro-tbody">
+                {rankedData
+                  .slice(0, showAllResults ? rankedData.length : 5)
+                  .map((item, index) => (
+                    <tr key={index} className="cuenta-ahorro-row">
+                      <td className="cuenta-ahorro-cell">{index + 1}</td>
+                      <td className="cuenta-ahorro-cell">{item.entidad}</td>
+                      <td className="cuenta-ahorro-cell">{item.displayValue}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
 
-          <button
-            className="cuenta-ahorro-button"
-            onClick={() => setShowAllResults(!showAllResults)}
-          >
-            {showAllResults ? "Ver menos" : "Ver más"}
-          </button>
-        </div>
+          {/* <-- MOVIDO Y MODIFICADO: El botón ahora está fuera del table-wrapper y dentro de un nuevo div */}
+          {rankedData.length > 5 && ( // Condicional para mostrar el botón solo si hay más de 5 resultados
+            <div className="cuenta-ahorro-toggle-link-container">
+              <button
+                className="cuenta-ahorro-button cuenta-ahorro-showmore" // Asegúrate de aplicar ambas clases
+                onClick={() => setShowAllResults(!showAllResults)}
+              >
+                {showAllResults ? "Ver menos" : "Ver más"}
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

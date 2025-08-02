@@ -2,218 +2,240 @@
 
 /* 1. Contenedor full-screen con fondo degradado suave */
 .signin-container {
-  width: 100vw;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(180deg, #71cefd 0%, #ebf8ff 50%, #ffffff 100%);
-  padding: 2rem 1rem;
-  box-sizing: border-box;
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, #71cefd 0%, #ebf8ff 50%, #ffffff 100%);
+    padding: 2rem 1rem;
+    box-sizing: border-box;
 }
 
 /* 2. Tarjeta de formulario */
 .signin-content {
-  background: #ffffff;
-  border-radius: 2rem;
-  padding: 2.5rem 2rem;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  width: 100%;
-  max-width: 420px;
-  text-align: center;
-  box-sizing: border-box;
+    background: #ffffff;
+    border-radius: 2rem;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    box-sizing: border-box;
 }
 
 /* 3. Título “Registro” */
 .signin-content h2 {
-  font-size: 1.75rem;
-  font-weight: 600;
-  color: #003355;
-  margin-bottom: 2rem;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #003355;
+    margin-bottom: 2rem;
 }
 
-/* 4. Inputs y select “píldora” */
+/* 4. Inputs generales y select “píldora” */
 .signin-content input[type="text"],
 .signin-content input[type="email"],
 .signin-content input[type="password"],
-.signin-content select {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0.75rem 1.5rem;
-  margin-bottom: 1.5rem;
-  font-size: 1rem;
-  border: none;
-  border-radius: 2rem;
-  background: #f2fbff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  outline: none;
-  transition: box-shadow 0.2s, background 0.2s;
+.signin-content select:not(.pais-codigo-select) { /* Excluimos .pais-codigo-select de esta regla para controlarlo por separado */
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.75rem 1.5rem; /* Padding vertical y horizontal */
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 2rem;
+    background: #f2fbff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    outline: none;
+    transition: box-shadow 0.2s, background 0.2s;
+    line-height: 1.5; /* Line height estándar para el texto */
+    /* Calculamos la altura total para referencia: 1rem (font) * 1.5 (line-height) + 2 * 0.75rem (padding) = 1.5rem + 1.5rem = 3rem */
 }
 .signin-content input:focus,
 .signin-content select:focus {
-  background: #e0f7ff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: #e0f7ff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* 5. Contenedor de teléfono: alineación perfecta */
 .telefono-container {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  width: 100%;
+    display: flex;
+    align-items: center; /* Crucial para alinear verticalmente los items */
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
 }
+
 .pais-codigo-select,
 .telefono-container input[type="tel"] {
-  box-sizing: border-box;
-  font-size: 1rem;
-  border: none;
-  background: #f2fbff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  outline: none;
-  transition: background 0.2s, box-shadow 0.2s;
-  min-height: 3.5rem;
-  padding: 0 1rem;
-  border-radius: 2rem;
+    box-sizing: border-box;
+    font-size: 1rem;
+    border: none;
+    background: #f2fbff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    outline: none;
+    transition: background 0.2s, box-shadow 0.2s;
+    border-radius: 2rem;
+
+    /* ***** CLAVE PARA LA ALINEACIÓN Y ALTURA PERFECTA ***** */
+    /* Forzamos la misma altura fija */
+    height: 3.5rem; /* Ajusta este valor si necesitas que sean más altos o bajos */
+    /* Centramos el texto verticalmente usando line-height igual a height */
+    line-height: 3.5rem;
+    /* Eliminamos padding vertical, solo padding horizontal */
+    padding: 0 1rem;
+    /* Aseguramos que el color del texto sea el mismo si hay placeholders */
+    color: inherit;
 }
+
+/* Estilos específicos para el SELECT del código de país */
+.pais-codigo-select {
+    -webkit-appearance: none; /* Eliminar estilos por defecto de select en Webkit */
+    -moz-appearance: none;    /* Eliminar estilos por defecto de select en Mozilla */
+    appearance: none;         /* Eliminar estilos por defecto de select */
+    background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22%23666%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center; /* Posiciona la flecha */
+    background-size: 1rem; /* Tamaño de la flecha */
+    padding-right: 2rem; /* Espacio para que la flecha no se solape con el texto */
+    cursor: pointer;
+}
+
 /* Ajuste de anchos */
 .pais-codigo-select {
-  flex: 0 0 25%;
+    flex: 0 0 25%; /* Mantener el 25% */
 }
 .telefono-container input[type="tel"] {
-  flex: 1;
+    flex: 1; /* Ocupa el espacio restante */
 }
 
 /* 6. Mensaje de error */
 .error-message {
-  font-size: 0.9rem;
-  color: #d32f2f;
-  margin-bottom: 1rem;
-  text-align: left;
-  width: 100%;
-  box-sizing: border-box;
+    font-size: 0.9rem;
+    color: #d32f2f;
+    margin-bottom: 1rem;
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* 7. Botones “píldora” */
 .register-button,
 .back-button {
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0.75rem 0;
-  font-size: 1rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 2rem;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
-  margin-bottom: 1rem;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.75rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    margin-bottom: 1rem;
 }
 .register-button {
-  background: #003355;
-  color: #fff;
+    background: #003355;
+    color: #fff;
 }
 .register-button:hover {
-  background: #00253a;
-  transform: translateY(-2px);
+    background: #00253a;
+    transform: translateY(-2px);
 }
 .back-button {
-  background: #f2fbff;
-  color: #003355;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    background: #f2fbff;
+    color: #003355;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 .back-button:hover {
-  background: #e0f7ff;
-  transform: translateY(-2px);
+    background: #e0f7ff;
+    transform: translateY(-2px);
 }
 
 /* 8. Modal de términos y condiciones */
 .modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 .modal-content {
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 2rem;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  box-sizing: border-box;
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 2rem;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    box-sizing: border-box;
 }
 .modal-content h3 {
-  font-size: 1.25rem;
-  color: #003355;
-  margin-bottom: 1rem;
+    font-size: 1.25rem;
+    color: #003355;
+    margin-bottom: 1rem;
 }
 .modal-content p {
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
 }
 .modal-actions {
-  display: flex;
-  gap: 1rem;
+    display: flex;
+    gap: 1rem;
 }
 .modal-accept,
 .modal-cancel {
-  flex: 1;
-  padding: 0.75rem 0;
-  font-size: 0.9rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 2rem;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+    flex: 1;
+    padding: 0.75rem 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
 }
 .modal-accept {
-  background: #003355;
-  color: #fff;
+    background: #003355;
+    color: #fff;
 }
 .modal-accept:hover {
-  background: #00253a;
-  transform: translateY(-2px);
+    background: #00253a;
+    transform: translateY(-2px);
 }
 .modal-cancel {
-  background: #d32f2f;
-  color: #fff;
+    background: #d32f2f;
+    color: #fff;
 }
 .modal-cancel:hover {
-  background: #b71c1c;
-  transform: translateY(-2px);
+    background: #b71c1c;
+    transform: translateY(-2px);
 }
 
 /* 9. Responsividad */
 @media (max-width: 768px) {
-  .signin-content {
-    padding: 2rem 1.5rem;
-  }
-  .telefono-container {
-    gap: 0.75rem;
-  }
-  .pais-codigo-select {
-    flex: 0 0 30%;
-  }
+    .signin-content {
+        padding: 2rem 1.5rem;
+    }
+    .telefono-container {
+        gap: 0.75rem;
+    }
 }
 @media (max-width: 480px) {
-  .signin-content {
-    padding: 1.5rem 1rem;
-  }
-  .telefono-container {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1rem;
-  }
-  .pais-codigo-select {
-    flex: none;
-    width: 100%;
-  }
+    .signin-content {
+        padding: 1.5rem 1rem;
+    }
+    .telefono-container {
+        flex-direction: column; /* Apilar en pantallas pequeñas */
+        align-items: stretch; /* Estirar los elementos al 100% de ancho */
+        gap: 1rem;
+    }
+    .pais-codigo-select {
+        flex: none; /* Elimina la restricción de flex-basis */
+        width: 100%; /* Ocupa todo el ancho disponible */
+    }
 }

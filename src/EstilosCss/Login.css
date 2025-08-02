@@ -1,205 +1,207 @@
 /* Login.css */
 
-/* Contenedor full-screen con degradiente vertical y disposición en columna */
+/* Contenedor full-screen con degradado vertical y disposición en columna */
 .login-container {
-  width: 100vw;
-  /* Elimina height:100vh */
-  min-height: 100vh;                 /* Ocupa al menos toda la pantalla, pero crece */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;       /* Manténlo arriba en lugar de centrar */
-  padding: 2rem 0;                   /* Espacio arriba y abajo */
-  background: linear-gradient(180deg, #71CEFD 0%, #FFFFFF 41%);
-  /* Elimina overflow: hidden para permitir scroll si es necesario */
-  box-sizing: border-box;
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    /* REDUCIMOS MÁS EL PADDING SUPERIOR para que todo el contenido suba */
+    padding: 0 0; /* Lo ponemos a 0 para que el contenido empiece desde el borde superior */
+    background: linear-gradient(180deg, #71CEFD 0%, #FFFFFF 41%);
+    box-sizing: border-box;
 }
 
 /* Header que contiene el logo */
 .login-header {
-  width: 100%;
-  max-width: 350px;
-  display: flex;
-  justify-content: center;
-  margin-bottom: -5%;
-  position: relative;
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+    justify-content: center;
+    /* REDUCIMOS ESTE MARGEN para acercar la caja de login aún más al logo */
+    margin-bottom: -0.5rem; /* Usamos un margen negativo para que se superponga ligeramente con el logo */
+    position: relative;
 }
 
-/* Logo centrado y siempre escalado hacia arriba */
+/* Logo centrado y escalado */
 .login-header .logo {
-  width: 70%;
-  max-width: 350px;
-  height: auto;
-  display: block;
-  transform-origin: bottom center;
-  transform: scale(1.2);
-  transition: opacity 0.2s;
+    max-width: 300px;
+    width: 90%;
+    height: auto;
+    display: block;
+    transition: opacity 0.2s;
 }
 
 .login-header .logo:hover {
-  opacity: 0.9;
+    opacity: 0.9;
 }
 
 /* Caja de contenido con fondo blanco y bordes redondeados */
 .login-content {
-  width: 100%;
-  max-width: 450px;
-  background: #ffffff;
-  border-radius: 1rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  padding: 2rem 1.5rem;              /* Menos porcentaje, más fijo */
-  margin-bottom: 2rem;               /* Espacio bajo el contenido */
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    width: 100%;
+    max-width: 450px;
+    background: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    padding: 2rem 1.5rem;
+    margin-bottom: 2rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Formulario: inputs centrados y espaciados */
 .login-content form {
-  width: 100%;
-  display: flex;
-  margin-top: 0;
-  flex-direction: column;
-  align-items: center;
+    width: 100%;
+    display: flex;
+    margin-top: 0;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Estilos de los inputs */
 .login-content input {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  margin-bottom: 1rem;
-  font-size: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 0.5rem;
-  background-color: #f2f9ff;
-  box-sizing: border-box;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    background-color: #f2f9ff;
+    box-sizing: border-box;
 }
 
 /* Mensaje de error */
 .error-message {
-  color: #e74c3c;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-  text-align: center;
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
 /* Botón de iniciar sesión */
 .login-button {
-  width: 70%;
-  max-width: 500px;
-  padding: 0.75rem 0;
-  font-size: 1rem;
-  font-weight: 600;
-  background-color: #000;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  margin-bottom: 1rem;
-  transition: opacity 0.2s ease;
-  box-sizing: border-box;
-  border-radius: 0.5rem;
+    width: 90%;
+    max-width: 500px;
+    padding: 0.75rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    transition: opacity 0.2s ease;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
 }
 
 .login-button:hover {
-  opacity: 0.85;
+    opacity: 0.85;
 }
 
 /* Botón de volver */
 .back-button {
-  width: 70%;
-  max-width: 500px;
-  padding: 0.75rem 0;
-  font-size: 1rem;
-  background-color: #f2f9ff;
-  color: #336b87;
-  border: 1px solid #ddd;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-  box-sizing: border-box;
-  margin-bottom: 1rem;
+    width: 90%;
+    max-width: 500px;
+    padding: 0.75rem 0;
+    font-size: 1rem;
+    background-color: #f2f9ff;
+    color: #336b87;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
 }
 
 .back-button:hover {
-  opacity: 0.9;
+    opacity: 0.9;
 }
 
 /* Reutiliza el estilo de signup-text y signup-link para recuperar contraseña */
 .login-content .signup-text {
-  font-size: 0.9rem;
-  color: #003366;
-  margin-top: 0;
-  text-align: center;
+    font-size: 0.9rem;
+    color: #003366;
+    margin-top: 0;
+    text-align: center;
 }
 
 .login-content .signup-link {
-  color: #0066cc;
-  text-decoration: underline;
-  margin-left: 4px;
-  cursor: pointer;
+    color: #0066cc;
+    text-decoration: underline;
+    margin-left: 4px;
+    cursor: pointer;
 }
 
-/* Responsividad manteniendo estilo base */
+/* --- Media Queries para responsividad --- */
+
+/* Para pantallas medianas (hasta 768px de ancho) */
 @media (max-width: 768px) {
-  .login-container {
-    padding: 1.5rem 0;
-  }
-  .login-header {
-    margin-bottom: 4%;
-  }
-  .login-header .logo {
-    transform: scale(1.1);
-    width: 80%;
-  }
-  .login-content {
-    padding: 1.5rem 1rem;
-  }
+    .login-container {
+        /* REDUCIMOS PADDING SUPERIOR para tablets */
+        padding: 0.25rem 0; /* Antes 0.5rem */
+    }
+    .login-header {
+        /* REDUCIMOS MARGEN INFERIOR para tablets */
+        margin-bottom: -0.25rem; /* Antes 0.25rem. Margen negativo para superposición */
+    }
+    .login-header .logo {
+        max-width: 250px;
+        width: 80%;
+    }
+    .login-content {
+        padding: 1.5rem 1rem;
+    }
 }
 
+/* Para pantallas pequeñas (hasta 480px de ancho) */
 @media (max-width: 480px) {
-  .login-container {
-    padding: 1rem 0;
-  }
-  .login-header {
-    margin-bottom: 1rem;    /* antes 6%, ahora 1rem para un espaciado más consistente */
-  }
-  .login-header .logo {
-    transform: scale(1);
-    width: 90%;
-  }
-  .login-content {
-    padding: 1.25rem 0.75rem;
-  }
-  .login-content input {
-    padding: 1rem 0.75rem;
-    margin-bottom: 1rem;
-  }
-  .login-button,
-  .back-button {
-    padding: 1rem 0;
-    font-size: 0.9rem;
-  }
+    .login-container {
+        /* REDUCIMOS PADDING SUPERIOR para móviles */
+        padding: 0.1rem 0; /* Antes 0.25rem */
+    }
+    .login-header {
+        /* REDUCIMOS MARGEN INFERIOR para móviles */
+        margin-bottom: -0.5rem; /* Antes 0.1rem. Margen negativo más pronunciado si es necesario */
+    }
+    .login-header .logo {
+        max-width: 200px;
+        width: 90%;
+    }
+    .login-content {
+        padding: 1.25rem 0.75rem;
+    }
+    .login-content input {
+        padding: 1rem 0.75rem;
+        margin-bottom: 1rem;
+    }
+    .login-button,
+    .back-button {
+        padding: 1rem 0;
+        font-size: 0.9rem;
+        width: 90%;
+    }
 }
 
-/* Para Chrome, Safari y derivados */
+/* --- Estilos para Autocompletado del Navegador --- */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 textarea:-webkit-autofill,
 textarea:-webkit-autofill:hover,
 textarea:-webkit-autofill:focus {
-  /* Establece el mismo fondo que tus inputs normales */
-  -webkit-box-shadow: 0 0 0px 1000px #f2f9ff inset !important;
-  /* Opcional: si quieres también quitar la transición de color de texto */
-  -webkit-text-fill-color: #000 !important;
-  /* Elimina la transición por defecto */
-  transition: background-color 5000s ease-in-out 0s !important;
+    -webkit-box-shadow: 0 0 0px 1000px #f2f9ff inset !important;
+    -webkit-text-fill-color: #000 !important;
+    transition: background-color 5000s ease-in-out 0s !important;
 }
 
-/* Para Firefox (aún experimental) */
 input:-moz-autofill,
 textarea:-moz-autofill {
-  box-shadow: 0 0 0px 1000px #f2f9ff inset !important;
-  -moz-text-fill-color: #000 !important;
+    box-shadow: 0 0 0px 1000px #f2f9ff inset !important;
+    -moz-text-fill-color: #000 !important;
 }

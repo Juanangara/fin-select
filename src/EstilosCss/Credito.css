@@ -1,193 +1,310 @@
 /* Global container */
 .credit-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  background: linear-gradient(to bottom, #72d0fe 0%, #fff 90%);
-  min-height: 100vh;
-  box-sizing: border-box;
-  text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(to bottom, #72d0fe 0%, #fff 90%);
+    min-height: 100vh;
+    box-sizing: border-box;
+    text-align: center;
 }
 
 /* Header logo */
 .logo-header {
-  margin-top: -5%;
-  margin-bottom: -4%;
+    /* AJUSTE: Más negativo para subir el logo aún más */
+    margin-top: -12%; /* Antes -10%. Aumentado para subir más */
+    margin-bottom: -6%; /* Mantenemos este valor o ajustamos si queremos más/menos espacio debajo */
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 .logo-header .logo {
-  max-width: 260px;
-  width: 100%;
-  height: auto;
+    max-width: 260px;
+    width: 100%;
+    height: auto;
 }
 
 /* Credit header bar */
 .credit-header {
-  width: 90%;
-  max-width: 1000px;
-  height: 50px;
-  background: #fff;
-  border-radius: 999px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  padding: 6px 0;
-  margin-bottom: 20px;
+    width: 80%;
+    max-width: 900px;
+    height: 50px;
+    background: #fff;
+    border-radius: 999px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 6px 0;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .credit-title {
-  font-size: 1.3rem;
-  color: #003355;
-  margin: 0;
+    font-size: 1.3rem;
+    color: #003355;
+    margin: 0;
 }
 .credit-date {
-  font-size: 0.8rem;
-  color: #555;
-  margin-top: 2px;
+    font-size: 0.8rem;
+    color: #555;
+    margin-top: 2px;
 }
 
-/* Controls styling */
+/* Controls styling (Controles de selects) */
+.controls-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 90%;
+    max-width: 600px;
+    margin-bottom: 20px;
+}
+
 .credit-controls {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin: 10px;
 }
 .credit-select {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 999px;
-  background: #eee;
-  font-size: 1rem;
-  min-width: 120px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 999px;
+    background: #eee;
+    font-size: 1rem;
+    min-width: 120px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22%23666%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem;
 }
 
 /* Ensure first two selects fill half-row */
-.credit-container > .credit-controls:nth-child(3) .credit-select,
-.credit-container > .credit-controls:nth-child(4) .credit-select {
-  width: 100%;
-  max-width: none;
+.controls-wrapper > .credit-controls:nth-child(1),
+.controls-wrapper > .credit-controls:nth-child(2) {
+    width: calc(50% - 20px);
+    justify-content: flex-start;
 }
-
-.credit-container > .credit-controls:nth-child(3),
-.credit-container > .credit-controls:nth-child(4) {
-  width: calc(50% - 20px);
-  justify-content: flex-start;
+.controls-wrapper > .credit-controls:nth-child(1) .credit-select,
+.controls-wrapper > .credit-controls:nth-child(2) .credit-select {
+    width: 100%;
+    max-width: none;
 }
 
 /* Third select full-width, centered */
-.credit-container > .credit-controls:nth-child(5) {
-  display: flex;
-  width: 100%;
-  justify-content: center;
+.controls-wrapper > .credit-controls:nth-child(3) {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+.controls-wrapper > .credit-controls:nth-child(3) .credit-select {
+    width: auto;
+    min-width: 180px;
 }
 
 .credit-label {
-  display: flex;
-  flex-direction: column;
-  font-size: 1.1rem;
-  color: #336b87;
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.1rem;
+    color: #336b87;
+    width: 100%;
+    text-align: center;
 }
 
-/* Show button */
+/* Show button (El botón "Mostrar" principal) */
 .credit-button {
-  padding: 12px 30px;
-  border: none;
-  border-radius: 999px;
-  background: #003355;
-  color: #fff;
-  font-size: 1rem;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  transition: background 0.3s ease-in-out;
-  margin: 15px 0;
-  align-self: center;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 999px;
+    background: #003355;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    transition: background 0.3s ease-in-out;
+    margin: 15px 0;
+    align-self: center;
 }
 .credit-button:hover {
-  background: #005580;
+    background: #005580;
 }
 
 /* Table styling */
 .credit-table {
-  width: 90%;
-  max-width: 600px;
-  border-collapse: collapse;
-  margin: 20px auto 0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  background: #fff;
+    width: 90%;
+    max-width: 600px;
+    border-collapse: collapse;
+    margin: 20px auto 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background: #fff;
 }
 .credit-table th,
 .credit-table td {
-  padding: 12px 15px;
-  text-align: center;
+    padding: 12px 15px;
+    text-align: center;
 }
 .credit-table-head {
-  background: #e0f7ff;
+    background: #e0f7ff;
 }
 .credit-table-th {
-  font-size: 1.1rem;
-  color: #003355;
-  border-bottom: 2px solid #003355;
+    font-size: 1.1rem;
+    color: #003355;
+    border-bottom: 2px solid #003355;
 }
 .credit-table-body .credit-table-row:nth-child(even) {
-  background: #f9f9f9;
+    background: #f9f9f9;
 }
 .credit-table-cell {
-  font-size: 1rem;
-  color: #333;
+    font-size: 1rem;
+    color: #333;
 }
+
+/* ***** ESTILOS PARA "VER MÁS/VER MENOS" COMO LINK Y ALINEADO ***** */
+.credit-results-section {
+    width: 90%;
+    max-width: 600px;
+    margin-bottom: 20px;
+}
+
+.credit-toggle-link-container {
+    width: 100%;
+    text-align: right;
+    margin-top: 10px;
+    box-sizing: border-box;
+    /* AJUSTE: Aumentamos el padding-right para empujar el botón más a la izquierda */
+    padding-right: 35px; /* Antes 25px. Aumentado a 35px */
+}
+
+.credit-button.credit-toggle-results {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 1rem;
+    color: #0066cc;
+    text-decoration: underline;
+    cursor: pointer;
+    box-shadow: none;
+    transition: color 0.2s, text-decoration 0.2s;
+    margin: 0;
+    width: auto;
+}
+
+.credit-button.credit-toggle-results:hover {
+    color: #004488;
+    text-decoration: none;
+    transform: none;
+    opacity: 1;
+}
+
 
 /* Responsividad para componente Credit */
 @media (max-width: 768px) {
-  .credit-header {
-    height: auto;
-    padding: 10px 0;
-  }
-  .credit-title {
-    font-size: 1.1rem;
-  }
-  .credit-select {
-    min-width: 100px;
-    padding: 8px 12px;
-  }
-  .credit-container > .credit-controls:nth-child(3),
-  .credit-container > .credit-controls:nth-child(4) {
-    width: 100%;
-  }
+    .logo-header {
+        /* AJUSTE: Más negativo para tablets también */
+        margin-top: -10%; /* Antes -8% */
+        margin-bottom: -5%;
+    }
+    .logo-header .logo {
+        max-width: 200px;
+    }
+    .credit-header {
+        width: 90%;
+        height: auto;
+        padding: 10px 0;
+    }
+    .credit-title {
+        font-size: 1.1rem;
+    }
+    .credit-select {
+        min-width: 100px;
+        padding: 8px 12px;
+    }
+    .controls-wrapper {
+        width: 95%;
+    }
+    .controls-wrapper > .credit-controls:nth-child(1),
+    .controls-wrapper > .credit-controls:nth-child(2) {
+        width: calc(50% - 16px);
+        margin: 8px;
+    }
+    .controls-wrapper > .credit-controls:nth-child(3) {
+        margin: 8px;
+    }
+    .credit-table {
+        width: 95%;
+    }
+    .credit-results-section {
+        width: 95%;
+    }
+    .credit-toggle-link-container {
+        width: 100%;
+        /* AJUSTE: padding-right para tablets */
+        padding-right: 30px; /* Antes 20px. Aumentado a 30px */
+    }
 }
 
 @media (max-width: 480px) {
-  .credit-container {
-    padding: 10px;
-  }
-  .logo-header .logo {
-    max-width: 200px;
-  }
-  .credit-header {
-    width: 100%;
-    margin-bottom: 15px;
-  }
-  .credit-title {
-    font-size: 1rem;
-  }
-  .credit-date {
-    font-size: 0.75rem;
-  }
-  .credit-controls {
-    width: 100%;
-    flex-direction: column;
-    gap: 6px;
-    margin: 5px 0;
-  }
-  .credit-select {
-    width: 100%;
-    min-width: auto;
-  }
-  .credit-button {
-    width: 100%;
-  }
-  .credit-table {
-    width: 100%;
-    font-size: 0.9rem;
-  }
+    .credit-container {
+        padding: 10px;
+    }
+    .logo-header {
+        /* AJUSTE: Más negativo para móviles también */
+        margin-top: -8%; /* Antes -6% */
+        margin-bottom: -3%;
+    }
+    .logo-header .logo {
+        max-width: 180px;
+    }
+    .credit-header {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    .credit-title {
+        font-size: 1rem;
+    }
+    .credit-date {
+        font-size: 0.75rem;
+    }
+    .controls-wrapper {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        margin: 10px 0;
+    }
+    .credit-controls {
+        width: 100%;
+        margin: 5px 0;
+    }
+    .credit-select {
+        width: 100%;
+        min-width: auto;
+        padding: 8px 10px;
+    }
+    .credit-button {
+        width: 100%;
+    }
+    .credit-table {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+    .credit-table th,
+    .credit-table td {
+        padding: 8px 10px;
+    }
+    .credit-results-section {
+        width: 100%;
+    }
+    .credit-toggle-link-container {
+        width: 100%;
+        /* AJUSTE: padding-right para móviles */
+        padding-right: 20px; /* Antes 15px. Aumentado a 20px */
+    }
 }

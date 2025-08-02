@@ -1,98 +1,80 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./EstilosCss/Credito.css";
-import { creditOptions } from "./ArreglosCredito"; // Ajusta la ruta
-import { auth, dbRT } from "./firebase"; // Ajusta la ruta
+import { creditOptions } from "./ArreglosCredito";
+import { auth, dbRT } from "./firebase";
 import { ref, push } from "firebase/database";
 import finSelectLogo from "./fin-select.png";
 
+// Función auxiliar para formatear la fecha (fuera del componente para evitar re-creación)
+const formatearFecha = (fechaISO) => {
+  if (!fechaISO) return "";
+  const fecha = new Date(fechaISO);
+  return fecha.toLocaleDateString("es-CO", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
 
 const Credito = () => {
-  // Obtenemos los tipos disponibles (las claves del objeto creditOptions)
   const tiposDisponibles = Object.keys(creditOptions);
 
-  // Estados para cada nivel de selección
   const [selectedTipo, setSelectedTipo] = useState("");
   const [selectedProducto, setSelectedProducto] = useState("");
   const [selectedPlazo, setSelectedPlazo] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  // Estado para guardar la fecha de corte utilizada
   const [fechaCorte, setFechaCorte] = useState("");
-  // Flag para evitar guardar actividad duplicada
-  const [activitySaved, setActivitySaved] = useState(false);
-  // Estado para controlar la visualización de los resultados
+  const [activitySavedForSelection, setActivitySavedForSelection] = useState({});
   const [showAllResults, setShowAllResults] = useState(false);
 
-  // Función para obtener las 2 fechas de corte más recientes
-  const fetchFechasCorte = async () => {
-    const url =
-      "https://www.datos.gov.co/resource/w9zh-vetq.json?$select=fecha_corte&$order=fecha_corte DESC&$limit=2";
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error("Error al obtener las fechas de corte");
-    }
-    const data = await response.json();
-    return data.map((item) => item.fecha_corte);
-  };
+  const [availableCutoffDates, setAvailableCutoffDates] = useState([]);
 
-  // Función que obtiene la penúltima fecha de corte y ejecuta la consulta con ella
-  const handleBuscar = async () => {
-    if (!selectedTipo || !selectedProducto || !selectedPlazo) {
-      alert("Por favor, seleccione todos los campos");
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const fechas = await fetchFechasCorte();
-      let fechaSeleccionada = "";
-      if (fechas.length >= 2) {
-        // Usamos la penúltima fecha (índice 1)
-        fechaSeleccionada = fechas[1];
-      } else if (fechas.length > 0) {
-        fechaSeleccionada = fechas[0];
+  // useEffect para obtener las fechas de corte una sola vez al montar el componente
+  useEffect(() => {
+    const fetchCutoffDates = async () => {
+      try {
+        // La API devuelve las fechas ordenadas de más reciente a más antigua
+        const url =
+          "https://www.datos.gov.co/resource/w9zh-vetq.json?$select=fecha_corte&$order=fecha_corte DESC&$limit=2";
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error("Error al obtener las fechas de corte");
+        }
+        const data = await response.json();
+        setAvailableCutoffDates(data.map((item) => item.fecha_corte));
+      } catch (err) {
+        console.error("Error al cargar fechas de corte:", err);
+        setError("No se pudieron cargar las fechas de corte iniciales.");
       }
-      setFechaCorte(fechaSeleccionada);
+    };
+    fetchCutoffDates();
+  }, []);
 
-      const whereClause = `tipo_de_cr_dito='${selectedTipo}'`;
-      const additionalFilters = ` AND producto_de_cr_dito='${selectedProducto}' AND plazo_de_cr_dito='${selectedPlazo}'`;
-      const dateFilter = ` AND fecha_corte='${fechaSeleccionada}'`;
-      const where = whereClause + additionalFilters + dateFilter;
-
-      const params = new URLSearchParams({
-        "$where": where,
-        "$select":
-          "nombre_entidad, sum(tasa_efectiva_promedio * montos_desembolsados)/sum(montos_desembolsados) as tasa_promedio",
-        "$group": "nombre_entidad",
-        "$order": "tasa_promedio ASC",
-      });
-
-      const response = await fetch(
-        `https://www.datos.gov.co/resource/w9zh-vetq.json?${params.toString()}`
-      );
-      if (!response.ok) {
-        throw new Error("Error al consultar la API");
-      }
-      const data = await response.json();
-      setResults(data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+  // --- MODIFICACIÓN CLAVE AQUÍ ---
+  // Función para obtener la fecha de corte preferida (primero la última, luego la penúltima)
+  const getSelectedCutoffDate = useCallback(() => {
+    if (availableCutoffDates.length > 0) {
+      return availableCutoffDates[0]; // **Prioridad 1: Usa la última fecha de corte (índice 0)**
     }
-  };
+    // Si no hay última fecha (ej. array vacío), no hay nada que devolver
+    return "";
+  }, [availableCutoffDates]);
+  // --- FIN MODIFICACIÓN CLAVE ---
 
-  // Función para guardar la actividad del usuario (filtros y datos personales)
-  const guardarActividad = () => {
+
+  // Función para guardar la actividad del usuario (memoizada con useCallback)
+  const guardarActividad = useCallback(() => {
     const user = auth.currentUser;
     if (!user) {
-      alert("No hay usuario autenticado. Por favor, inicie sesión.");
+      setError("No hay usuario autenticado. Por favor, inicie sesión.");
       return;
     }
-    if (!activitySaved) {
+
+    const currentSelectionKey = `${selectedTipo}-${selectedProducto}-${selectedPlazo}`;
+
+    if (!activitySavedForSelection[currentSelectionKey]) {
       const userDataToSave = {
         userId: user.uid,
         correo: user.email || "Sin correo",
@@ -106,45 +88,103 @@ const Credito = () => {
       push(ref(dbRT, "userActivitiesCredito"), userDataToSave)
         .then(() => {
           console.log("Actividad guardada con éxito");
-          setActivitySaved(true);
+          setActivitySavedForSelection((prev) => ({
+            ...prev,
+            [currentSelectionKey]: true,
+          }));
         })
-        .catch((error) => {
-          console.error("Error al guardar la actividad:", error);
+        .catch((err) => {
+          console.error("Error al guardar la actividad:", err);
+          setError("Error al guardar su actividad. Intente de nuevo.");
         });
     }
-  };
+  }, [selectedTipo, selectedProducto, selectedPlazo, activitySavedForSelection]);
 
-  // Al presionar "Mostrar", se guarda la actividad y se ejecuta la consulta usando la penúltima fecha de corte
-  const handleShowResults = async () => {
+  // Función principal para buscar (memoizada con useCallback)
+  const handleBuscar = useCallback(async () => {
     if (!selectedTipo || !selectedProducto || !selectedPlazo) {
-      alert("Por favor, seleccione todos los campos");
+      setError("Por favor, seleccione todos los campos.");
+      setResults([]);
       return;
     }
+
+    setLoading(true);
+    setError(null);
+    setResults([]);
+
+    try {
+      const fechaSeleccionada = getSelectedCutoffDate();
+      if (!fechaSeleccionada) {
+        throw new Error(
+          "No se encontró una fecha de corte válida para la consulta. Verifique la disponibilidad de datos."
+        );
+      }
+      setFechaCorte(fechaSeleccionada);
+
+      const whereClause = `tipo_de_cr_dito='${selectedTipo}' AND producto_de_cr_dito='${selectedProducto}' AND plazo_de_cr_dito='${selectedPlazo}'`;
+      const dateFilter = `fecha_corte='${fechaSeleccionada}'`;
+      const fullWhere = `${whereClause} AND ${dateFilter}`;
+
+      const params = new URLSearchParams({
+        $where: fullWhere,
+        $select:
+          "nombre_entidad, sum(tasa_efectiva_promedio * montos_desembolsados)/sum(montos_desembolsados) as tasa_promedio",
+        $group: "nombre_entidad",
+        $order: "tasa_promedio ASC",
+      });
+
+      const response = await fetch(
+        `https://www.datos.gov.co/resource/w9zh-vetq.json?${params.toString()}`
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          `Error al consultar la API: ${response.status} ${response.statusText}`
+        );
+      }
+      const data = await response.json();
+
+      if (data.length === 0) {
+        setError("No se encontraron resultados para los filtros seleccionados.");
+        setResults([]);
+      } else {
+        setResults(data);
+      }
+    } catch (err) {
+      console.error("Error en handleBuscar:", err);
+      setError(`Ocurrió un error al cargar los datos: ${err.message}.`);
+      setResults([]);
+    } finally {
+      setLoading(false);
+      setShowAllResults(false);
+    }
+  }, [selectedTipo, selectedProducto, selectedPlazo, getSelectedCutoffDate]);
+
+  // La función handleShowResults ahora coordina las dos acciones
+  const handleShowResults = async () => {
+    if (!selectedTipo || !selectedProducto || !selectedPlazo) {
+      setError("Por favor, seleccione todos los campos.");
+      return;
+    }
+
     guardarActividad();
     await handleBuscar();
   };
 
-  // Opciones dinámicas:
-  const productosDisponibles = selectedTipo ? Object.keys(creditOptions[selectedTipo].Productos) : [];
+  const productosDisponibles = selectedTipo
+    ? Object.keys(creditOptions[selectedTipo]?.Productos || {})
+    : [];
   const plazosDisponibles =
-    selectedTipo && selectedProducto ? creditOptions[selectedTipo].Productos[selectedProducto] : [];
-
-  // Función para formatear la fecha de corte a un formato legible
-  const formatearFecha = (fechaISO) => {
-    const fecha = new Date(fechaISO);
-    return fecha.toLocaleDateString("es-CO", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
+    selectedTipo && selectedProducto
+      ? creditOptions[selectedTipo]?.Productos[selectedProducto] || []
+      : [];
 
   return (
     <div className="credit-container">
       <div className="logo-header">
         <img src={finSelectLogo} alt="Fin Select" className="logo" />
       </div>
-  
+
       <div className="credit-header">
         <h2 className="credit-title">Créditos</h2>
         {fechaCorte && (
@@ -153,8 +193,7 @@ const Credito = () => {
           </p>
         )}
       </div>
-  
-      {/* wrapper que crea el grid de 2 cols + 1 col */}
+
       <div className="controls-wrapper">
         <div className="credit-controls">
           <label className="credit-label">
@@ -166,10 +205,13 @@ const Credito = () => {
                 setSelectedTipo(e.target.value);
                 setSelectedProducto("");
                 setSelectedPlazo("");
-                setActivitySaved(false);
+                setError(null);
+                setResults([]);
               }}
             >
-              <option value="">Seleccione</option>
+              <option value="" disabled>
+                Seleccione
+              </option>
               {tiposDisponibles.map((tipo) => (
                 <option key={tipo} value={tipo}>
                   {tipo}
@@ -178,7 +220,7 @@ const Credito = () => {
             </select>
           </label>
         </div>
-  
+
         {selectedTipo && (
           <div className="credit-controls">
             <label className="credit-label">
@@ -189,10 +231,13 @@ const Credito = () => {
                 onChange={(e) => {
                   setSelectedProducto(e.target.value);
                   setSelectedPlazo("");
-                  setActivitySaved(false);
+                  setError(null);
+                  setResults([]);
                 }}
               >
-                <option value="">Seleccione</option>
+                <option value="" disabled>
+                  Seleccione
+                </option>
                 {productosDisponibles.map((prod) => (
                   <option key={prod} value={prod}>
                     {prod}
@@ -202,7 +247,7 @@ const Credito = () => {
             </label>
           </div>
         )}
-  
+
         {selectedProducto && (
           <div className="credit-controls">
             <label className="credit-label">
@@ -212,12 +257,16 @@ const Credito = () => {
                 value={selectedPlazo}
                 onChange={(e) => {
                   setSelectedPlazo(e.target.value);
-                  setActivitySaved(false);
+                  setSelectedPlazo(e.target.value);
+                  setError(null);
+                  setResults([]);
                 }}
               >
-                <option value="">Seleccione</option>
+                <option value="" disabled>
+                  Seleccione
+                </option>
                 {plazosDisponibles.map((plazo, index) => (
-                  <option key={index} value={plazo}>
+                  <option key={plazo} value={plazo}>
                     {plazo}
                   </option>
                 ))}
@@ -226,16 +275,20 @@ const Credito = () => {
           </div>
         )}
       </div>
-  
-      <button className="credit-button" onClick={handleShowResults}>
-        Mostrar
+
+      <button
+        className="credit-button"
+        onClick={handleShowResults}
+        disabled={loading || !selectedTipo || !selectedProducto || !selectedPlazo}
+      >
+        {loading ? "Buscando..." : "Mostrar"}
       </button>
-  
+
       {loading && <p className="credit-loading">Cargando...</p>}
       {error && <p className="credit-error">Error: {error}</p>}
-  
+
       {results.length > 0 && (
-        <div>
+        <div className="credit-results-section">
           <table className="credit-table">
             <thead className="credit-table-head">
               <tr>
@@ -248,27 +301,32 @@ const Credito = () => {
               {results
                 .slice(0, showAllResults ? results.length : 5)
                 .map((item, index) => (
-                  <tr key={index} className="credit-table-row">
+                  <tr key={item.nombre_entidad || index} className="credit-table-row">
                     <td className="credit-table-cell">{index + 1}</td>
                     <td className="credit-table-cell">{item.nombre_entidad}</td>
                     <td className="credit-table-cell">
-                      {parseFloat(item.tasa_promedio).toFixed(1)}
+                      {parseFloat(item.tasa_promedio).toFixed(2)}%
                     </td>
                   </tr>
                 ))}
             </tbody>
           </table>
-          <button
-            className="credit-button"
-            onClick={() => setShowAllResults(!showAllResults)}
-          >
-            {showAllResults ? "Ver menos" : "Ver más"}
-          </button>
+          {results.length > 5 && (
+            // ***** CAMBIO AQUÍ: Envuelto el botón en el nuevo div *****
+            <div className="credit-toggle-link-container">
+              <button
+                className="credit-button credit-toggle-results"
+                onClick={() => setShowAllResults(!showAllResults)}
+              >
+                {showAllResults ? "Ver menos" : "Ver más"}
+              </button>
+            </div>
+            // **********************************************************
+          )}
         </div>
       )}
     </div>
   );
-  
 };
 
 export default Credito;

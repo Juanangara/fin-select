@@ -1,96 +1,135 @@
-/* RecupeContrasena.css - Estilo empresarial y sutil */
+/* RecupeContrasena.css - Estilo empresarial y sutil, adaptado al nuevo tema */
 
 .recuperar-container {
-  width: 100%;
-  max-width: 400px;
-  margin: 4rem auto;
-  padding: 2rem;
-  background: #ffffff;
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  font-family: "Segoe UI", Roboto, sans-serif;
+    width: 100%;
+    max-width: 450px; /* Un poco más amplio para una mejor sensación */
+    margin: 4rem auto; /* Sigue centrado verticalmente */
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 1rem; /* Borde más redondeado para consistencia */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra ligeramente más pronunciada, similar a las tablas */
+    font-family: "Segoe UI", Roboto, sans-serif;
+    box-sizing: border-box; /* Asegura que padding no aumente el width */
 }
 
-/* 2. Título elegante */
+/* Título estilo píldora/header */
 .recuperar-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #2c3e50;
-  margin-bottom: 1.5rem;
-  text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #003355; /* Color principal de texto oscuro */
+    margin-bottom: 1.5rem;
+    text-align: center;
+    /* Estilos adicionales para parecerse a los títulos de CuentaAhorro/TasaCDT */
+    background: #e0f7ff; /* Fondo claro similar a thead */
+    padding: 0.75rem 0; /* Padding vertical para altura */
+    border-radius: 999px; /* Borde de píldora */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); /* Sombra sutil */
 }
 
-/* 3. Input minimalista */
+/* Input minimalista */
 .recuperar-input {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  margin-bottom: 1rem;
-  font-size: 1rem;
-  color: #2c3e50;
-  border: 1px solid #ccd1d9;
-  border-radius: 0.5rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  box-sizing: border-box;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: #333; /* Color de texto más neutral */
+    border: 1px solid #ccd1d9;
+    border-radius: 999px; /* Bordes de píldora como el select */
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+    background: #eee; /* Fondo claro para los inputs */
 }
 .recuperar-input:focus {
-  border-color: #1f618d;
-  box-shadow: 0 0 0 3px rgba(31, 97, 141, 0.1);
-  outline: none;
+    border-color: #0066cc; /* Borde azul claro al enfocar */
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2); /* Sombra azul clara */
+    outline: none;
 }
 
-/* 4. Botón principal sobrio */
+/* Botón principal */
 .recuperar-button {
-  width: 100%;
-  padding: 0.75rem;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #ffffff;
-  background-color: #1f618d;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
-  margin-bottom: 1rem;
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #003355; /* Color principal de botón */
+    border: none;
+    border-radius: 999px; /* Bordes de píldora como los otros botones */
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, transform 0s; /* Transiciones suaves como otros botones */
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Sombra consistente */
 }
 .recuperar-button:hover {
-  background-color: #154360;
-  transform: translateY(-1px);
+    background-color: #005580; /* Tono de azul más claro al pasar el mouse */
+    transform: none; /* Eliminar transformación para consistencia con otros botones */
 }
 
-/* 5. Mensaje de feedback discreto */
+/* Mensaje de feedback discreto (manteniendo el color rojo para errores) */
 .recuperar-feedback {
-  font-size: 0.9rem;
-  color: #c0392b;
-  margin-bottom: 1rem;
-  text-align: center;
+    font-size: 0.9rem;
+    color: #c0392b; /* Rojo para errores */
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
-/* 6. Enlace de volver con estilo simple */
+/* Enlace de volver con estilo simple */
 .recuperar-volver {
-  font-size: 0.9rem;
-  color: #1f618d;
-  text-decoration: none;
-  cursor: pointer;
-  display: block;
-  text-align: center;
-  transition: color 0.2s;
+    font-size: 0.9rem;
+    color: #0066cc; /* Azul claro para enlaces */
+    text-decoration: underline; /* Subrayado por defecto para enlaces */
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    transition: color 0.2s, text-decoration 0.2s; /* Transición suave */
 }
 .recuperar-volver:hover {
-  color: #154360;
+    color: #004488; /* Azul más oscuro al pasar el mouse */
+    text-decoration: none; /* Quitar subrayado al pasar el mouse */
 }
 
-/* 7. Responsive */
+/* Responsive */
+/* Media Query para Tablets (ancho máximo 768px) - Añadido un breakpoint intermedio */
+@media (max-width: 768px) {
+    .recuperar-container {
+        margin: 3rem auto; /* Ajuste de margen para tablets */
+        padding: 1.8rem;
+        max-width: 400px;
+    }
+    .recuperar-title {
+        font-size: 1.3rem;
+        padding: 0.6rem 0;
+    }
+    .recuperar-input,
+    .recuperar-button {
+        font-size: 0.95rem;
+        padding: 0.7rem 1rem;
+    }
+    .recuperar-feedback,
+    .recuperar-volver {
+        font-size: 0.85rem;
+    }
+}
+
+
+/* Media Query para Móviles (ancho máximo 480px) */
 @media (max-width: 480px) {
-  .recuperar-container {
-    margin: 2rem 1rem;
-    padding: 1.5rem;
-  }
-  .recuperar-title {
-    font-size: 1.25rem;
-  }
-  .recuperar-input,
-  .recuperar-button {
-    font-size: 0.9rem;
-    padding: 0.65rem 0.9rem;
-  }
+    .recuperar-container {
+        margin: 2rem 1rem; /* Más cerca de los bordes en móviles */
+        padding: 1.5rem;
+        border-radius: 0.75rem; /* Un poco menos redondeado en pantallas muy pequeñas */
+    }
+    .recuperar-title {
+        font-size: 1.15rem; /* Título más pequeño en móviles */
+        padding: 0.5rem 0;
+    }
+    .recuperar-input,
+    .recuperar-button {
+        font-size: 0.85rem; /* Texto más pequeño para inputs y botones */
+        padding: 0.6rem 0.8rem;
+    }
+    .recuperar-feedback,
+    .recuperar-volver {
+        font-size: 0.8rem; /* Texto de feedback y enlace más pequeño */
+    }
 }

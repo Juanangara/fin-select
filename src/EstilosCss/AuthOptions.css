@@ -2,100 +2,109 @@
 
 /* Contenedor full-screen con degradado vertical */
 .auth-container {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(180deg, #71cefd 0%, #ebf8ff 46%, #78d2ff 100%);
-  overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, #71cefd 0%, #ebf8ff 46%, #78d2ff 100%);
+    overflow: hidden;
 }
 
 /* Caja interior con bordes suaves y degradado */
 .auth-content {
-  width: 90%;
-  max-width: 400px;
-  padding: 8% 6%;
-  background: linear-gradient(180deg, #99ddff 1.92%, #ffffff 49.52%, #99ddff 100%);
-  border-radius: 1rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  text-align: center;
-  box-sizing: border-box;
-  position: relative;
+    width: 90%;
+    max-width: 400px;
+    /* Ajustamos el padding para usar unidades relativas */
+    padding: 2.5rem 2rem; /* Por ejemplo, 40px arriba/abajo y 32px a los lados */
+    background: linear-gradient(180deg, #99ddff 1.92%, #ffffff 49.52%, #99ddff 100%);
+    border-radius: 1rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    box-sizing: border-box;
+    position: relative;
 }
 
-/* Logo centrado, caja fija y siempre escalado sin invadir el botón */
 .auth-content .logo {
-  width: 200px;
-  height: auto;
-  margin: 0 auto 6%;
-  display: block;
-  transform-origin: bottom center;
-  transform: scale(1.5);
-  transition: opacity 0.2s ease-in-out;
+    /* Aumentamos el tamaño máximo por defecto del logo para PCs */
+    max-width: 250px; /* Por ejemplo, de 200px a 250px, o incluso 300px si quieres */
+    width: 100%; /* Sigue siendo responsivo y se encoge si es necesario */
+    height: auto; /* Mantiene la proporción */
+    margin: 0 auto 1.5rem;
+    display: block;
+    /* Quitamos el transform: scale inicial para simplificar */
+    transition: opacity 0.2s ease-in-out;
 }
 
 .auth-content .logo:hover {
-  opacity: 0.9;
+    opacity: 0.9;
 }
 
 /* Botón principal */
 .auth-content .login-button {
-  width: 100%;
-  padding: 4% 0;
-  font-size: 1rem;
-  font-weight: 600;
-  background-color: #000;
-  color: #fff;
-  border: none;
-  border-radius: 999px;
-  cursor: pointer;
-  margin-bottom: 5%;
-  transition: opacity 0.2s ease-in-out;
-  box-sizing: border-box;
+    width: 100%;
+    /* Ajustamos el padding del botón a unidades fijas o relativas para mayor control */
+    padding: 1rem 0; /* Por ejemplo, 16px arriba/abajo */
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    margin-bottom: 1.25rem; /* Usamos rem para un espaciado consistente */
+    transition: opacity 0.2s ease-in-out;
+    box-sizing: border-box;
 }
 
 .auth-content .login-button:hover {
-  opacity: 0.85;
+    opacity: 0.85;
 }
 
 /* Texto de registro */
 .auth-content .signup-text {
-  font-size: 0.9rem;
-  color: #003366;
-  margin-top: 0;
+    font-size: 0.9rem;
+    color: #003366;
+    margin-top: 0;
 }
 
 .auth-content .signup-link {
-  color: #0066cc;
-  text-decoration: underline;
-  margin-left: 4px;
-  cursor: pointer;
+    color: #0066cc;
+    text-decoration: underline;
+    margin-left: 4px;
+    cursor: pointer;
 }
 
-/* Responsividad manteniendo estilos base */
+/* --- Media Queries (Mantenemos y ajustamos) --- */
+
+/* Para pantallas medianas (hasta 768px de ancho) */
 @media (max-width: 768px) {
-  .auth-content {
-    padding: 10% 5%;
-  }
-  .auth-content .logo {
-    /* Reducir escala manteniendo proporción */
-    transform: scale(1.3);
-    width: 180px;
-    margin-bottom: 5%;
-  }
+    .auth-content {
+        padding: 2rem 1.5rem;
+    }
+    .auth-content .logo {
+        /* Aquí lo reducimos para tablets y pantallas medianas */
+        max-width: 180px; /* O a 200px si quieres que sea un poco más grande aquí */
+        margin-bottom: 1rem;
+    }
 }
 
+/* Para pantallas pequeñas (hasta 480px de ancho) */
 @media (max-width: 480px) {
-  .auth-content {
-    padding: 12% 4%;
+    .auth-content {
+        padding: 1.5rem 1rem;
+        width: 95%;
+    }
+    .auth-content .logo {
+        /* Y aquí para móviles */
+        max-width: 140px;
+        margin-bottom: 0.8rem;
+    }
+    .auth-content .login-button {
+        padding: 0.8rem 0;
+        font-size: 0.95rem;
+    }
+    .auth-content .signup-text {
+        font-size: 0.85rem;
+    }
   }
-  .auth-content .logo {
-    transform: scale(1.1);
-    width: 150px;
-    margin-bottom: 4%;
-  }
-  .auth-content .login-button {
-    padding: 3.5% 0;
-  }
-}

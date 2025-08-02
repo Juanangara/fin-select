@@ -127,6 +127,7 @@ const TasaCDT = () => {
     })
     .sort((a, b) => b.rate - a.rate)
     .slice(0, -1); // Excluir la última fila de la tabla
+
   return (
     <div className="tasa-cdt-container">
       {/* 1. Logo primero */}
@@ -135,7 +136,7 @@ const TasaCDT = () => {
       </div>
 
       {/* 2. Título a continuación */}
-      <h1 className="tasa-cdt-title">Mejores tasas‑CDT</h1>
+      <h1 className="tasa-cdt-title">Mejores tasas-CDT</h1>
 
       {/* 3. Controles después del título */}
       <div className="tasa-cdt-controls">
@@ -148,7 +149,7 @@ const TasaCDT = () => {
           value={selectedTerm}
           onChange={handleSelectChange}
         >
-          <option value="">Seleccione una opción</option>
+          <option value="Seleccione una opción">Seleccione una opción</option> {/* Asegúrate que este sea el valor inicial */}
           {termKeys.map((key, index) => (
             <option key={index} value={headerRow[key]}>
               {headerRow[key]}
@@ -162,35 +163,41 @@ const TasaCDT = () => {
 
       {/* 4. Resultados */}
       {showResults && (
-        <div className="tasa-cdt-table-wrapper">
-          <table className="tasa-cdt-table">
-            <thead className="tasa-cdt-thead">
-              <tr>
-                <th className="tasa-cdt-th">Ranking</th>
-                <th className="tasa-cdt-th">Entidad</th>
-                <th className="tasa-cdt-th">Tasa</th>
-              </tr>
-            </thead>
-            <tbody className="tasa-cdt-tbody">
-              {rankedData
-                .slice(0, showAllResults ? rankedData.length : 5)
-                .map((item, index) => (
-                  <tr key={index} className="tasa-cdt-row">
-                    <td className="tasa-cdt-cell">{index + 1}</td>
-                    <td className="tasa-cdt-cell">{item.identidad}</td>
-                    <td className="tasa-cdt-cell">{item.rawValue}</td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+        <> {/* <-- CAMBIO AQUÍ: Usamos un fragmento de React */}
+          <div className="tasa-cdt-table-wrapper">
+            <table className="tasa-cdt-table">
+              <thead className="tasa-cdt-thead">
+                <tr>
+                  <th className="tasa-cdt-th">Ranking</th>
+                  <th className="tasa-cdt-th">Entidad</th>
+                  <th className="tasa-cdt-th">Tasa</th>
+                </tr>
+              </thead>
+              <tbody className="tasa-cdt-tbody">
+                {rankedData
+                  .slice(0, showAllResults ? rankedData.length : 5)
+                  .map((item, index) => (
+                    <tr key={index} className="tasa-cdt-row">
+                      <td className="tasa-cdt-cell">{index + 1}</td>
+                      <td className="tasa-cdt-cell">{item.identidad}</td>
+                      <td className="tasa-cdt-cell">{item.rawValue}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
 
-          <button
-            className="tasa-cdt-button tasa-cdt-showmore"
-            onClick={() => setShowAllResults(!showAllResults)}
-          >
-            {showAllResults ? "Ver menos" : "Ver más"}
-          </button>
-        </div>
+          {rankedData.length > 5 && (
+            <div className="tasa-cdt-toggle-link-container"> {/* <-- CAMBIO AQUÍ: Este div ahora está fuera del table-wrapper */}
+              <button
+                className="tasa-cdt-button tasa-cdt-showmore"
+                onClick={() => setShowAllResults(!showAllResults)}
+              >
+                {showAllResults ? "Ver menos" : "Ver más"}
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

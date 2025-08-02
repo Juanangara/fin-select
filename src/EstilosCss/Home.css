@@ -2,81 +2,132 @@
 
 /* Contenedor full-screen con degradado vertical que acaba en blanco */
 .home-container {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;      /* Logo arriba, botones abajo */
-  align-items: center;         /* Centrado horizontal */
-  justify-content: flex-start; /* Desde arriba hacia abajo */
-  background: linear-gradient(
-    180deg,
-    #71CEFD 0%,
-    #ffffff 68%
-  );
-  overflow: hidden;
-  box-sizing: border-box;
-  padding-top: 4%;             /* Un poco de espacio superior */
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;      /* Logo arriba, botones abajo */
+    align-items: center;         /* Centrado horizontal */
+    justify-content: flex-start; /* Desde arriba hacia abajo */
+    background: linear-gradient(
+      180deg,
+      #71CEFD 0%,
+      #ffffff 68%
+    );
+    overflow: hidden;
+    box-sizing: border-box;
+    /* Devolvemos el padding-top a un valor similar al original */
+    padding-top: 4%; /* Valor original. Si quieres el logo un poco más abajo, aumenta el % */
+    padding-bottom: 2rem; /* Mantenemos un padding inferior */
 }
 
 /* Header con logo */
 .home-header {
-  width: 100%;
-  max-width: 350px;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 2%;           /* Ajusta para acercarlo a los botones */
-  position: relative;
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+    justify-content: center;
+    /* Ajustamos este margen para controlar el espacio general.
+       Si el padding-top del container ya empuja el logo, este puede ser 0 o un valor pequeño. */
+    margin-bottom: 0; /* Lo ponemos a 0 y controlamos el espacio con home-content */
+    position: relative;
 }
 
 /* Logo centrado y escalado */
 .home-logo {
-  width: 150px;                /* ancho base */
-  max-width: 70%;
-  height: auto;
-  display: block;
-  transform-origin: bottom center;
-  transform: scale(1.6);       /* escala fija para hacerlo más grande */
-  transition: opacity 0.2s;
+    width: 150px;                 /* ancho base */
+    max-width: 70%;
+    height: auto;
+    display: block;
+    transform-origin: bottom center;
+    transform: scale(1.6);        /* escala fija para hacerlo más grande */
+    transition: opacity 0.2s;
 }
 
 .home-logo:hover {
-  opacity: 0.9;
+    opacity: 0.9;
 }
 
 /* Contenedor de los botones */
 .home-content {
-  width: 100%;
-  max-width: 600px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;                 /* separación uniforme */
-  padding: 0 5%;
-  box-sizing: border-box;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;                  /* separación uniforme */
+    padding: 0 5%;
+    box-sizing: border-box;
+    /* Controlamos el espacio entre el logo y los botones usando margin-top aquí.
+       Ajusta este valor para la distancia deseada entre el logo y el primer botón. */
+    margin-top: 2rem; /* Por ejemplo, 2rem (32px) de espacio después del logo escalado. */
 }
 
 /* Botones genéricos */
 .home-button {
-  width: 100%;
-  padding: 1rem 0;
-  font-size: 1.1rem;
-  font-weight: 600;
-  background-color: #ffffff;
-  color: #003366;
-  border: none;
-  border-radius: 2rem;         /* píldora */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-  transition: opacity 0.2s, transform 0.2s;
+    width: 100%;
+    padding: 1rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: #ffffff;
+    color: #003366;
+    border: none;
+    border-radius: 2rem;          /* píldora */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
 }
 
 .home-button:hover {
-  opacity: 0.9;
-  transform: translateY(-2px);
+    opacity: 0.9;
+    transform: translateY(-2px);
 }
 
 /* Botón “Cerrar sesión” */
 .home-button.logout-button {
-  background-color: #000000;
-  color: #ffffff;
+    background-color: #000000;
+    color: #ffffff;
+}
+
+/* --- Media Queries para responsividad --- */
+
+/* Para pantallas medianas (ej. tablets en vertical, hasta 768px de ancho) */
+@media (max-width: 768px) {
+    .home-container {
+        padding-top: 3%; /* Ajuste proporcional para tablets */
+    }
+    .home-logo {
+        width: 120px;
+        max-width: 60%;
+        transform: scale(1.5);
+    }
+    .home-content {
+        margin-top: 1.5rem; /* Menos espacio entre logo y botones para tablets */
+        gap: 1rem;
+    }
+    .home-button {
+        padding: 0.85rem 0;
+        font-size: 1rem;
+    }
+}
+
+/* Para pantallas pequeñas (ej. móviles, hasta 480px de ancho) */
+@media (max-width: 480px) {
+    .home-container {
+        padding-top: 2%; /* Ajuste proporcional para móviles */
+        padding-bottom: 1rem;
+    }
+    .home-logo {
+        width: 100px;
+        max-width: 50%;
+        transform: scale(1.3);
+    }
+    .home-content {
+        margin-top: 1rem; /* Poco espacio entre logo y botones para móviles */
+        gap: 0.75rem;
+        padding: 0 3%;
+    }
+    .home-button {
+        padding: 0.75rem 0;
+        font-size: 0.95rem;
+    }
 }
